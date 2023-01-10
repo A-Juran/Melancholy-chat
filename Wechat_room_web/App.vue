@@ -13,8 +13,13 @@
 </script>
 
 <style>
-	/* 隐藏所有页面的 navigationBar */
-	.uni-app--showtopwindow uni-page-head {
-		display: none;
+	html,body {
+		font-size: 20.7px;
+	}
+	
+	@media screen and (min-width:430px) {
+		html,body {
+			font-size: 23px;
+		}
 	}
 </style>

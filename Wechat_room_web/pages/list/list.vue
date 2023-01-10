@@ -1,8 +1,6 @@
 <template>
 	<view class="chat-body">
-		<header class="chat-header">
-			
-		</header>
+		123
 	</view>
 </template>
 

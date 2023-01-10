@@ -18,7 +18,7 @@
         }
     },
     "compileType": "miniprogram",
-    "libVersion": "2.29.2",
+    "libVersion": "2.29.1",
     "appid": "touristappid",
     "projectname": "small_chat",
     "condition": {},

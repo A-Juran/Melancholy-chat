@@ -1,19 +1,23 @@
 {
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			// uni-ui 规则如下配置
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
-			"style": {
-			}
+			"style": {}
 		},
 		{
 			"path": "pages/list/list",
-			"style": {
-			}
+			"style": {}
 		},
 		{
 			"path": "pages/me/me",
-			"style": {
-			}
+			"style": {}
 		}
 	],
 	"globalStyle": {
@@ -26,24 +30,22 @@
 	"uniIdRouter": {},
 	"tabBar": {
 		"backgroundColor": "#fff",
-		"borderStyle": "none",
-		"list": [
-			{
-				"text": "消息",
-				"pagePath": "pages/index/index",
-				"iconPath": "static/tabBar/message.png",
-				"selectedIconPath": "static/tabBar/message_Selected.png"
-			},{
-				"text": "聊天室",
-				"pagePath": "pages/list/list",
-				"iconPath": "static/tabBar/list.png",
-				"selectedIconPath": "static/tabBar/liset_Selected.png"
-			},{
-				"text": "我",
-				"pagePath": "pages/me/me",
-				"iconPath": "static/tabBar/me.png",
-				"selectedIconPath": "static/tabBar/me_Selected.png"
-			}
-		]
+		"borderStyle": "white",
+		"list": [{
+			"text": "消息",
+			"pagePath": "pages/index/index",
+			"iconPath": "static/tabBar/message.png",
+			"selectedIconPath": "static/tabBar/message_Selected.png"
+		}, {
+			"text": "聊天室",
+			"pagePath": "pages/list/list",
+			"iconPath": "static/tabBar/list.png",
+			"selectedIconPath": "static/tabBar/liset_Selected.png"
+		}, {
+			"text": "我",
+			"pagePath": "pages/me/me",
+			"iconPath": "static/tabBar/me.png",
+			"selectedIconPath": "static/tabBar/me_Selected.png"
+		}]
 	}
 }

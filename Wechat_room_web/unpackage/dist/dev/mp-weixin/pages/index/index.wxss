@@ -1,24 +1,54 @@
 
-.content {
+.chat-body {
+	width: 100%;
+	padding: 8px 10px;
+	box-sizing: border-box;
+}
+.chat-body .chat-list {
+	width: 100%;
+}
+.chat-body .chat-list .chat-list-item {
+	height: 2.8985rem;
 	display: flex;
-	flex-direction: column;
+	justify-content: space-between;
+	padding: 5px 0;
+	box-sizing: border-box;
+}
+.chat-body .chat-list .chat-list-item:not(:last-child) {
+	box-shadow: 0px 0.3px 0px rgba(0, 0, 0, .1);
+}
+.chat-body .chat-list .chat-list-item .chat-object-info {
+	height: 100%;
+	display: flex;
 	align-items: center;
-	justify-content: center;
 }
-.logo {
-	height: 200rpx;
-	width: 200rpx;
-	margin-top: 200rpx;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 50rpx;
+.chat-body .chat-list .chat-list-item .chat-object-info>image {
+	display: inline-block;
+	width: 2.3188rem;
+	height: 2.3188rem;
+	border-radius: 50%;
+	margin-right: 10px;
 }
-.text-area {
-	display: flex;
-	justify-content: center;
+.chat-body .chat-list .chat-list-item .chat-object-info .chat-object-bease-info {
+	font-size: 0.5797rem;
 }
-.title {
-	font-size: 36rpx;
-	color: #8f8f94;
+.chat-body .chat-list .chat-list-item .chat-object-info .chat-object-bease-info>._p {
+	font-size: 0.7246rem;
+}
+.chat-body .chat-list .chat-list-item .chat-object-info .chat-object-bease-info>text {
+	display: block;
+	width: 7.2463rem;
+	font-size: 0.5797rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 1;
+	white-space: nowrap;
+	color: #ccc;
+}
+.chat-body .chat-list .chat-list-item .chat-info-time {
+	font-size: 0.5797rem;
+	line-height: 2.8985rem;
+	text-align: center;
+	color: #ccc;
 }
 

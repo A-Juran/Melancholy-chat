@@ -1,17 +1,10 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*每个页面公共css */
+page,page {
+	font-size: 20.7px;
+}
+@media screen and (min-width:430px) {
+page,page {
+		font-size: 23px;
+}
+}
 
