@@ -23,6 +23,7 @@
         <module>wechat-service</module>
         <module>wechat-dao</module>
         <module>wechat-common</module>
+        <module>wechat-server</module>
     </modules>
 
     <!--打包类型-->

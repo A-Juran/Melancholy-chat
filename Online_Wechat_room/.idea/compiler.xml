@@ -9,6 +9,7 @@
         <module name="wechat-entity" />
         <module name="wechat-common" />
         <module name="wechat-service" />
+        <module name="wechat-server" />
         <module name="wechat-dao" />
         <module name="wechat-controller" />
       </profile>
@@ -21,6 +22,7 @@
       <module name="wechat-controller" options="-parameters" />
       <module name="wechat-dao" options="-parameters" />
       <module name="wechat-entity" options="-parameters" />
+      <module name="wechat-server" options="-parameters" />
       <module name="wechat-service" options="-parameters" />
     </option>
   </component>
