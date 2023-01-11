@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wechat-entity" />
+        <module name="wechat-common" />
+        <module name="wechat-service" />
+        <module name="wechat-dao" />
+        <module name="wechat-controller" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Online_Wechat_room" options="" />
+      <module name="wechat-common" options="-parameters" />
+      <module name="wechat-controller" options="-parameters" />
+      <module name="wechat-dao" options="-parameters" />
+      <module name="wechat-entity" options="-parameters" />
+      <module name="wechat-service" options="-parameters" />
+    </option>
+  </component>
+</project>
