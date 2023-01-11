@@ -31,7 +31,9 @@
     <!--定义依赖版本号-->
     <properties>
         <java.version>11</java.version>
-        <lombok.version>2.0.19</lombok.version>
+        <fastjson.version>2.0.19</fastjson.version>
+        <slf4j.version>2.0.6</slf4j.version>
+        <!--<lombok.version>2.0.19</lombok.version>-->
     </properties>
 
     <dependencies>
@@ -45,7 +47,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -72,6 +73,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
         <!--webSocket-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -81,7 +87,13 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${lombok.version}</version>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <!--sl4j-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
     </dependencies>
 

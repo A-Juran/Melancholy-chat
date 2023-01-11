@@ -56,7 +56,6 @@ public class WebsocketUtil {
         if (session == null) {
             return;
         }
-
         // 同步
         RemoteEndpoint.Async async = session.getAsyncRemote();
         async.sendText(message);
