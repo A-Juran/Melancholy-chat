@@ -1,9 +1,18 @@
 <template>
 	<view class="chat-body">
+		<view class="status_bar">
+			<!-- 这里是状态栏 -->
+		</view>
+		
+		<view class="box">
+			<uni-nav-bar height="50px" title="标题" />
+		</view>
 
 		<!-- 头部 -->
 		<view class="chat-header">
-			<uni-search-bar placeholder="搜索" bgColor="#EEEEEE"  />
+			<uni-search-bar placeholder="搜索" bgColor="#EEEEEE" />
+			<uni-notice-bar show-icon scrollable
+				text="uni-app 版正式发布，开发一次，同时发布iOS、Android、H5、微信小程序、支付宝小程序、百度小程序、头条小程序等7大平台。" />
 		</view>
 
 		<!-- 群列表 -->
@@ -71,7 +80,7 @@
 		data() {
 			return {
 				title: 'Hello',
-				search:''
+				search: ''
 			}
 		},
 		onLoad() {

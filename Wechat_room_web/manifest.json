@@ -1,6 +1,6 @@
 {
     "name" : "small_chat",
-    "appid" : "",
+    "appid" : "__UNI__7BC91C6",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wxd62d251390574889",
         "setting" : {
             "urlCheck" : false
         },
