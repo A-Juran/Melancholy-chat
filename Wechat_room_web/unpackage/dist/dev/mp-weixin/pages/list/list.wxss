@@ -1,0 +1,5 @@
+
+.uni-fab,.uni-fab__content--other-platform {
+	box-shadow: none!important;
+}
+
