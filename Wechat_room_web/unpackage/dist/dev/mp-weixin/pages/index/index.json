@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "uni-nav-bar": "/node-modules/@dcloudio/uni-ui/lib/uni-nav-bar/uni-nav-bar",
-    "uni-search-bar": "/node-modules/@dcloudio/uni-ui/lib/uni-search-bar/uni-search-bar",
-    "uni-notice-bar": "/node-modules/@dcloudio/uni-ui/lib/uni-notice-bar/uni-notice-bar"
-  }
-}
