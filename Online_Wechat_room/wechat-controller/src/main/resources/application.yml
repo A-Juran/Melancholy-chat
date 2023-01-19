@@ -1,0 +1,14 @@
+
+#数据源配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3308/online_wechat_room?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&AllowPublicKeyRetrieval=True
+    username: root
+    password: 123456
+
+#mybatis配置
+mybatis-plus:
+  config-location: classpath:mapper/*.xml
+  type-aliases-package: la.iit.pojo
+
