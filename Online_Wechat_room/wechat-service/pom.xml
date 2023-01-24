@@ -8,7 +8,8 @@
   </parent>
 
   <artifactId>wechat-service</artifactId>
-  <packaging>jar</packaging>
+  
+  <packaging>pom</packaging>
 
   <name>wechat-service</name>
 

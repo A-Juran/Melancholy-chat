@@ -24,6 +24,12 @@
             <artifactId>wechat-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!--引入dao-->
+        <dependency>
+            <groupId>la.iit</groupId>
+            <artifactId>wechat-dao</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

@@ -28,7 +28,7 @@ public class AjaxResult extends HashMap<String, Object>
     public enum Type
     {
         /** 成功 */
-        SUCCESS(0),
+        SUCCESS(200),
         /** 警告 */
         WARN(301),
         /** 错误 */

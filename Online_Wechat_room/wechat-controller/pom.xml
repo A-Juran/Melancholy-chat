@@ -9,7 +9,8 @@
     </parent>
 
     <artifactId>wechat-controller</artifactId>
-    <packaging>jar</packaging>
+
+    <packaging>war</packaging>
 
     <name>wechat-controller</name>
 
@@ -21,6 +22,11 @@
         <dependency>
             <groupId>la.iit</groupId>
             <artifactId>wechat-server</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>la.iit</groupId>
+            <artifactId>wechat-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
