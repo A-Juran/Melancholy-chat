@@ -175,9 +175,9 @@ public class OkHttpUtils {
             //对其map进行遍历进行数据拼接。
             try {
                 for (Map.Entry<String,String> entry:paramMap.entrySet()){
-                    urlBuilder.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8))
+                    urlBuilder.append(URLEncoder.encode(entry.getKey(), String.valueOf(StandardCharsets.UTF_8)))
                             .append("=")
-                            .append(URLEncoder.encode(entry.getValue(),StandardCharsets.UTF_8))
+                            .append(URLEncoder.encode(entry.getValue(), String.valueOf(StandardCharsets.UTF_8)))
                             .append("&");
                 }
             }catch (Exception e){

@@ -12,7 +12,7 @@
 		<view class="chat-header">
 			<uni-search-bar placeholder="搜索" bgColor="#EEEEEE" />
 			<uni-notice-bar show-icon scrollable
-				text="uni-app 版正式发布，开发一次，同时发布iOS、Android、H5、微信小程序、支付宝小程序、百度小程序、头条小程序等7大平台。" />
+				text="JR-在线聊天室,欢迎您的使用." />
 		</view>
 
 		<!-- 群列表 -->
@@ -44,7 +44,7 @@
 					<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=2369668922&spec=100" mode=""></image>
 					<view class="chat-object-bease-info">
 						<p>靓仔队</p>
-						<text>[未读]昨天你在群内积极发言最积极,获得龙王标识</text>
+						<text>昨天你在群内积极发言最积极,获得龙王标识</text>
 					</view>
 				</view>
 

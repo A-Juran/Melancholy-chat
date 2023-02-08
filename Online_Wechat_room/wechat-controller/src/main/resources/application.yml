@@ -1,11 +1,18 @@
-
+server:
+  port: 8080
+  servlet:
+    context-path: /
 #数据源配置
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3308/online_wechat_room?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&AllowPublicKeyRetrieval=True
+    url: jdbc:mysql://localhost:3306/online_wechat_room?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&AllowPublicKeyRetrieval=True
     username: root
     password: 123456
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 #mybatis配置
 mybatis-plus:

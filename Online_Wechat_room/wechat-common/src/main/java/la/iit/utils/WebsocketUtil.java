@@ -1,13 +1,13 @@
 package la.iit.utils;
 
 import com.alibaba.fastjson.JSON;
-import jakarta.websocket.RemoteEndpoint;
-import jakarta.websocket.Session;
 import la.iit.response.AjaxResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+import javax.websocket.RemoteEndpoint;
+import javax.websocket.Session;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
