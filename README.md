@@ -4,11 +4,6 @@
 目前仍然在开发之中……
 
 ## 页面截图
-
-![首页](E:\Personal Project\z_project\Wechat_room\assets\image-20230208235157458.png)
-
-
-
-![image-20230208235230949](E:\Personal Project\z_project\Wechat_room\assets\image-20230208235230949.png)
-
-![image-20230208235247063](E:\Personal Project\z_project\Wechat_room\assets\image-20230208235247063.png)
+![首页](https://github.com/A-Juran/Wechat_room/blob/main/assets/image-20230208235157458.png)
+![聊天室](https://github.com/A-Juran/Wechat_room/blob/main/assets/image-20230208235247063.png)
+![我](https://github.com/A-Juran/Wechat_room/blob/main/assets/image-20230208235230949.png)
