@@ -27,7 +27,16 @@
 			}
 		
 		}
-	],
+	    ,{
+            "path" : "pages/index/commiuncation/commiuncation",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "在线聊天室",

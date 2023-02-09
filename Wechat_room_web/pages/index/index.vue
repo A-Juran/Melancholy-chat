@@ -3,7 +3,7 @@
 		<view class="status_bar">
 			<!-- 这里是状态栏 -->
 		</view>
-		
+
 		<view class="box">
 			<uni-nav-bar height="50px" title="标题" />
 		</view>
@@ -11,16 +11,13 @@
 		<!-- 头部 -->
 		<view class="chat-header">
 			<uni-search-bar placeholder="搜索" bgColor="#EEEEEE" />
-			<uni-notice-bar show-icon scrollable
-				text="JR-在线聊天室,欢迎您的使用." />
+			<uni-notice-bar show-icon style="height: 30px;" scrollable text="JR-在线聊天室,欢迎您的使用." />
 		</view>
 
 		<!-- 群列表 -->
 		<view class="chat-list">
-
 			<!-- 我的聊天群列表 -->
-			<view class="chat-list-item">
-
+			<view class="chat-list-item" @click="toCommiuncation()">
 				<!-- 群头像、基础信息 -->
 				<view class="chat-object-info">
 					<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=21171326&spec=100" mode=""></image>
@@ -29,7 +26,6 @@
 						<text>[未读]我未成年</text>
 					</view>
 				</view>
-
 				<!-- 聊天时间 -->
 				<view class="chat-info-time">
 					2023-01-01
@@ -38,7 +34,6 @@
 
 			<!-- 我的聊天群列表 -->
 			<view class="chat-list-item">
-
 				<!-- 群头像、基础信息 -->
 				<view class="chat-object-info">
 					<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=2369668922&spec=100" mode=""></image>
@@ -47,16 +42,13 @@
 						<text>昨天你在群内积极发言最积极,获得龙王标识</text>
 					</view>
 				</view>
-
 				<!-- 聊天时间 -->
 				<view class="chat-info-time">
 					2023-01-01
 				</view>
 			</view>
-
 			<!-- 我的聊天群列表 -->
 			<view class="chat-list-item">
-
 				<!-- 群头像、基础信息 -->
 				<view class="chat-object-info">
 					<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=12540701&spec=100" mode=""></image>
@@ -65,7 +57,6 @@
 						<text>java 明天早上9点以后考试 4小时内 根据老师出的一道题进行数据爬取</text>
 					</view>
 				</view>
-
 				<!-- 聊天时间 -->
 				<view class="chat-info-time">
 					2023-01-01
@@ -87,7 +78,11 @@
 
 		},
 		methods: {
-
+			toCommiuncation(){
+				uni.navigateTo({
+					url:"/pages/index/commiuncation/commiuncation"
+				})
+			}
 		}
 	}
 </script>
@@ -95,12 +90,13 @@
 <style>
 	.chat-body {
 		width: 100%;
-		padding: 8px 10px;
+		padding: 8px 0px;
 		box-sizing: border-box;
 	}
-
-	.chat-body .chat-list {
+	.chat-header,.chat-body .chat-list{
 		width: 100%;
+		padding:0 16px ;
+		box-sizing: border-box;
 	}
 
 	.chat-body .chat-list .chat-list-item {
