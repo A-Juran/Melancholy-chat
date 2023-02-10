@@ -1,6 +1,6 @@
 const request = (config) => {
 	//配置公共请求地址
-	const BASE_URL = "127.0.0.1:8080/";
+	const BASE_URL = "http://localhost:8080";
 	return new Promise((resolve,reject) =>{
 		//请求提示。
 		uni.showLoading({

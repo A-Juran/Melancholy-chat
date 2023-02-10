@@ -3,6 +3,8 @@ package la.iit.utils;
 import com.alibaba.fastjson.JSON;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -24,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  * okHttpUtils
  */
 public class OkHttpUtils {
+    Logger logger = LoggerFactory.getLogger(OkHttpUtils.class);
     //okHttp对象初始化。
     private static volatile OkHttpClient  okHttpClient = null;
     //todo 认识该对象。
@@ -169,7 +172,7 @@ public class OkHttpUtils {
         //builder request object。
         request = new Request.Builder().get();
         //setting request params.
-        StringBuilder urlBuilder = new StringBuilder();
+        StringBuilder urlBuilder = new StringBuilder(url);
         if (paramMap != null){
             urlBuilder.append("?");
             //对其map进行遍历进行数据拼接。
@@ -186,6 +189,7 @@ public class OkHttpUtils {
             //删除最后一个字符&
             urlBuilder.deleteCharAt(urlBuilder.length() - 1);
         }
+        logger.info("request http-->{}",urlBuilder.toString());
         request.url(urlBuilder.toString());
         return this;
     }

@@ -24,7 +24,7 @@
 
 <script>
 	//使用自定义api
-	import {userLogin} from '../../api/login/login.js';
+	import request from '../../api/login/login.js';
 	
 	export default {
 		data() {
@@ -34,13 +34,13 @@
 		},
 		methods: {
 			user_login() {
-				userLogin(null);
 				// 获取用户的信息
 				uni.login({
 					success: (res) => {
 						if (res.code) {
+							console.log(res.code);
 							//访问后台地址进行登录
-							userLogin(null);
+							request.userLogin({code:res.code});
 						}
 					}
 				});
