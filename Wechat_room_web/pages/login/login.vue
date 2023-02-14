@@ -32,7 +32,20 @@
 
 			}
 		},
+		onLoad() {
+			console.log();
+		},
 		methods: {
+			//获取用户基础信息
+			getUserProfile(){
+				uni.getUserProfile({
+					desc:'获取用户基础信息',
+					success: (res) => {
+						console.log(res);
+					}
+				})
+			},
+			//用户进行登录
 			user_login() {
 				// 获取用户的信息
 				uni.login({
