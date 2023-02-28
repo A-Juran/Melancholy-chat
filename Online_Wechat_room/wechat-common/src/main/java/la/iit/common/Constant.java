@@ -6,5 +6,6 @@ package la.iit.common;
  */
 public class Constant {
     public static String LOG_RECORD_FAIL = "log record fail";
-    public static String LOG_RECORD_SUCCESS = "log record fail";
+    public static String LOG_RECORD_SUCCESS = "log record Success";
+
 }

@@ -38,6 +38,7 @@ public class LogAspect {
         try {
             proceed = point.proceed();
         } catch (Throwable e) {
+            //错误日志
             saveLog(point, Constant.LOG_RECORD_FAIL,e);
             throw new RuntimeException(e);
         }
@@ -60,7 +61,7 @@ public class LogAspect {
      */
     public String preHandle(ProceedingJoinPoint point,HttpServletRequest request){
         String reqParam = "";
-        //todo I don't know?
+        //todo? I don't know?
         Signature signature = point.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
