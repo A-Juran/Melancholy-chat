@@ -11,7 +11,7 @@
 		</view>
 
 		<!-- 弹窗层 -->
-		<view class="applet-mask">
+		<view class="applet-mask" v-if="isAuthority">
 			<view class="Applet-info">
 				<!-- 小程序logo。 -->
 				<img src="http://q2.qlogo.cn/headimg_dl?dst_uin=2369668922&spec=100" alt="">
@@ -21,9 +21,8 @@
 				<button type="primary" class="authorities" size="mini" @click="user_login">授权登录</button>
 			</view>
 		</view>
-
 		<!-- 头像上传、设置昵称、设置性别 -->
-		<view class="user-info">
+		<view class="user-info" v-else>
 			<form @submit="formSubmit" @reset="formReset">
 				<view class="user-avatar">
 					<button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
@@ -34,13 +33,12 @@
 					<input type="nickname" class="weui-input" placeholder="请输入昵称" />
 				</view>
 				<view class="user-sex">
-					<radio-group class="sexRadio" @change="sexChange"  v-for="(item, index) in sex" :key="item.value">
-						<radio color="#2DCF8C" :value="item.value + ''" :checked="index + 1 === gender" />
-						<b>{{item.label}}</b>
+					<radio-group class="sexRadio" @change="sexChange" v-for="(item, index) in sex" :key="item.value">
+						{{item.label}}：<radio color="#2DCF8C" :value="item.value + ''" :checked="index + 1 === gender" />
 					</radio-group>
 				</view>
 				<view class="submit">
-					<button type="primary" size="mini">提交</button>
+					<button type="primary" size="mini">进入聊天</button>
 				</view>
 			</form>
 		</view>
@@ -54,6 +52,7 @@
 	export default {
 		data() {
 			return {
+				isAuthority: false,
 				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
 				gender: '',
 				sex: [{
@@ -135,12 +134,24 @@
 </script>
 
 <style>
+	.user-sex .sexRadio>radio,
+	.user-sex .sexRadio>b {
+		vertical-align: middle;
+	}
+
+	.user-sex .sexRadio {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
 	.user-info .submit {
 		margin-top: 15px;
 	}
-	.user-info .user-sex>radio-group:not(:first-child){
+
+	.user-info .user-sex>radio-group:not(:first-child) {
 		margin-left: 10px;
 	}
+
 	.user-info .user-sex {
 		display: flex;
 		font-size: 12px;
