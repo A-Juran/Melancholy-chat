@@ -34,7 +34,8 @@
 				</view>
 				<view class="user-sex">
 					<radio-group class="sexRadio" @change="sexChange" v-for="(item, index) in sex" :key="item.value">
-						{{item.label}}：<radio color="#2DCF8C" :value="item.value + ''" :checked="index + 1 === gender" />
+						{{item.label}}：
+						<radio color="#2DCF8C" :value="item.value + ''" :checked="index + 1 === gender" />
 					</radio-group>
 				</view>
 				<view class="submit">
@@ -48,11 +49,10 @@
 <script>
 	//使用自定义api
 	import request from '../../api/login/login.js';
-
 	export default {
 		data() {
 			return {
-				isAuthority: false,
+				isAuthority: true,
 				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
 				gender: '',
 				sex: [{
@@ -60,12 +60,8 @@
 						label: '男'
 					},
 					{
-						value: 2,
+						value: 0,
 						label: '女'
-					},
-					{
-						value: 3,
-						label: '其他'
 					}
 				],
 
@@ -92,6 +88,7 @@
 					avatarUrl
 				} = e.detail
 				this.avatarUrl = avatarUrl;
+				console.log(this.avatarUrl);
 			},
 			formSubmit: function(e) {
 				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))

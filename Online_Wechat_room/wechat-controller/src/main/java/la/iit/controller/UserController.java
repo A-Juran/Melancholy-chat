@@ -9,6 +9,7 @@ import la.iit.annotation.VisitLimit;
 import la.iit.config.WxAppIdConfig;
 import la.iit.dto.UserDTO;
 import la.iit.response.AjaxResult;
+import la.iit.utils.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,8 @@ public class UserController {
 
     private WxAppIdConfig wxAppIdConfig;
 
+
+
     public UserController(WxAppIdConfig appIdConfig){
         this.wxAppIdConfig = appIdConfig;
     }
@@ -40,17 +43,17 @@ public class UserController {
     @VisitLimit(limit = 1,sec = 1)
     public AjaxResult login(@RequestBody @Validated(UserDTO.UserLogin.class) UserDTO userDTO) {
         log.info("接收的code{}", userDTO.getCode());
-//        String content = OkHttpUtils.builder()
-//                .addParams("appid", wxAppIdConfig.getAppid())
-//                .addParams("secret", wxAppIdConfig.getSecret())
-//                .addParams("js_code", userDTO.getCode())
-//                .addParams("grant_type", "authorization_code")
-//                .url("https://api.weixin.qq.com/sns/jscode2session")
-//                .get().async();
-//        log.info("请求成功----->{}", content);
+        String content = OkHttpUtils.builder()
+                .addParams("appid", wxAppIdConfig.getAppid())
+                .addParams("secret", wxAppIdConfig.getSecret())
+                .addParams("js_code", userDTO.getCode())
+                .addParams("grant_type", "authorization_code")
+                .url("https://api.weixin.qq.com/sns/jscode2session")
+                .get().async();
+        log.info("请求成功----->{}", content);
         return null;
     }
-    
+
     @PostMapping("/register")
     @Operation(summary = "用户登录")
     @SysLogin
