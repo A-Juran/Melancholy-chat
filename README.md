@@ -1,9 +1,21 @@
-# Wechat_room
-后端基于SpringBoot、WebSocket，
-前端基于Uniapp的一款在线聊天室。
-目前仍然在开发之中……
+# Wechat_room（微聊天室）
+为了使个人业务能力及开发能力得到提升，所以在百忙之中决定抽出空余时间进行此项目的开发。
 
-## 页面截图
+## 技术栈
+前端：SpringBoot + MybatisPlus + SpringWebSocket + redis + JWT
+
+前端：UniApp + Uni-UI
+
+## 主要功能（这是目前需要进行开发的功能）
+ - 添加好友/好友私聊。
+ - 添加群/群消息交流。
+ - 好友信息/群信息通知。
+ - 个人基础信息修改。
+
+## 目前仍然在开发之中（因为个人需要同时开发前后端，而且容易偷懒所以更新时间可能会比较慢。）
+
+
+## 基础页面截图
 ![首页](https://github.com/A-Juran/Wechat_room/blob/main/assets/image-20230208235157458.png)
 ![聊天室](https://github.com/A-Juran/Wechat_room/blob/main/assets/image-20230208235247063.png)
 ![我](https://github.com/A-Juran/Wechat_room/blob/main/assets/image-20230208235230949.png)

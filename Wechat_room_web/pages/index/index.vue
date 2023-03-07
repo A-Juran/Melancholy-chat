@@ -5,13 +5,13 @@
 		</view>
 
 		<view class="box">
-			<uni-nav-bar height="50px" title="标题" />
+			<uni-nav-bar height="50px" title="首页" />
 		</view>
 
 		<!-- 头部 -->
 		<view class="chat-header">
 			<uni-search-bar placeholder="搜索" bgColor="#EEEEEE" />
-			<uni-notice-bar show-icon style="height: 30px;" scrollable text="JR-在线聊天室,欢迎您的使用." />
+			<!-- <uni-notice-bar show-icon style="height: 20px;" scrollable text="JR-在线聊天室,欢迎您的使用." /> -->
 		</view>
 
 		<!-- 群列表 -->
@@ -92,6 +92,10 @@
 		width: 100%;
 		padding: 8px 0px;
 		box-sizing: border-box;
+	}
+	.chat-header{
+		position: relative;
+		width:100%;
 	}
 	.chat-header,.chat-body .chat-list{
 		width: 100%;

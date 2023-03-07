@@ -5,7 +5,7 @@
 		</view>
 		
 		<view class="box-bg">
-			<uni-nav-bar height="50px" title="标题" />
+			<uni-nav-bar height="50px" title="聊天室" />
 		</view>
 
 		<!-- 添加按钮用户、加入群 -->

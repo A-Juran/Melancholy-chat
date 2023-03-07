@@ -5,9 +5,9 @@
 			<!-- 这里是状态栏 -->
 		</view>
 		
-		<view class="box-bg">
-			<uni-nav-bar height="50px" title="标题" />
-		</view>
+<!-- 		<view class="box-bg">
+			<uni-nav-bar height="50px" title="我" />
+		</view> -->
 		
 		<view class="user-background-wall">
 			<!-- 熊 -->
