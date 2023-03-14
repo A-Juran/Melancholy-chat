@@ -29,6 +29,8 @@ public class AjaxResult extends HashMap<String, Object>
     {
         /** 成功 */
         SUCCESS(200),
+        /** 失败 */
+        Failed(201),
         /** 警告 */
         WARN(301),
         /** 错误 */

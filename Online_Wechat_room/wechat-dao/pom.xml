@@ -8,12 +8,20 @@
     </parent>
 
     <artifactId>wechat-dao</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>wechat-dao</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>la.iit</groupId>
+            <artifactId>wechat-entity</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

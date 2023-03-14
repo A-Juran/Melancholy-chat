@@ -20,14 +20,14 @@ public class UserDTO {
     /**
      * code
      */
-    @NotNull(message = "code不能为空",groups = UserLogin.class)
+    @NotNull(message = "code不能为空", groups = UserLogin.class)
     @Size(min = 2)
     private String code;
 
     /**
      * 头像
      */
-    @NotNull(message = "头像不能为空",groups = UserRegister.class)
+    @NotNull(message = "头像不能为空", groups = UserInfoUpdate.class)
     @Size(min = 2)
     private String avatar;
 
@@ -35,21 +35,21 @@ public class UserDTO {
      * 昵称
      */
     @Size(min = 2)
-    @NotNull(message = "昵称不能为空",groups = UserRegister.class)
+    @NotNull(message = "昵称不能为空", groups = UserInfoUpdate.class)
     private String nickName;
 
 
     /**
      * 登录
      */
-    public interface UserLogin{
+    public interface UserLogin {
 
     }
 
     /**
      * 注册
      */
-    public interface UserRegister{
+    public interface UserInfoUpdate {
 
     }
 }

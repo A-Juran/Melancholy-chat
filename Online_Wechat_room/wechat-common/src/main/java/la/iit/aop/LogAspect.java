@@ -1,7 +1,6 @@
 package la.iit.aop;
 
 import com.alibaba.fastjson.JSONObject;
-import la.iit.common.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -18,6 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
+
+import static la.iit.common.Constant.LOG_RECORD_FAIL;
+import static la.iit.common.Constant.LOG_RECORD_SUCCESS;
 
 /**
  * @author JuRan
@@ -39,21 +43,23 @@ public class LogAspect {
             proceed = point.proceed();
         } catch (Throwable e) {
             //错误日志
-            saveLog(point, Constant.LOG_RECORD_FAIL,e);
+            saveLog(point, LOG_RECORD_FAIL.value(),e);
             throw new RuntimeException(e);
         }
-        saveLog(point, Constant.LOG_RECORD_SUCCESS,null);
+        saveLog(point, LOG_RECORD_SUCCESS.value(),null);
         return proceed;
     }
 
     private void saveLog(ProceedingJoinPoint point, String logRecordSuccess, Object o) {
         //获取request请求对象。
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest request =
+                Optional.of(((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest())
+                        .orElseThrow(RuntimeException::new);
         //记录ip|请求url|请求参数.
         String host = getRemoteHost(request);
         String url = request.getRequestURI();
         String reqParam = Arrays.toString(Arrays.stream(point.getArgs()).toArray());
-        log.info("请求IP:【{}】,URL:【{}】,参数:【{}】",host,url,reqParam);
+        log.info("请求IP:【{}】，logRecordSuccess:【{}】,,URL:【{}】,参数:【{}】",host,logRecordSuccess,url,reqParam);
     }
 
     /**
@@ -79,8 +85,7 @@ public class LogAspect {
 
     /**
      * 获取目标主机的ip
-     * @param request
-     * @return
+     * @return ip
      */
     private String getRemoteHost(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
