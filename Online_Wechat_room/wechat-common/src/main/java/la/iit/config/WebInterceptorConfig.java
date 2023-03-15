@@ -12,9 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebInterceptorConfig implements WebMvcConfigurer {
     private VisitLimitInterceptor visitLimitInterceptor;
-    public WebInterceptorConfig(VisitLimitInterceptor visitLimitInterceptor){
+
+    public WebInterceptorConfig(VisitLimitInterceptor visitLimitInterceptor) {
         this.visitLimitInterceptor = visitLimitInterceptor;
     }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(visitLimitInterceptor);

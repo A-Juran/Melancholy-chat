@@ -1,5 +1,6 @@
 package la.iit.dto;
 
+import la.iit.pojo.SysUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,15 @@ public class UserDTO {
     @Size(min = 2)
     @NotNull(message = "昵称不能为空", groups = UserInfoUpdate.class)
     private String nickName;
+
+
+    /**
+     * 性别
+     */
+    @Size(min = 2)
+    @NotNull(message = "性别不能为空",
+            groups = UserInfoUpdate.class)
+    private SysUser.Gender sex;
 
 
     /**

@@ -24,7 +24,8 @@ public class RedisUtils {
     public boolean set(final String key, Object value, Long expireTime) {
         boolean result = false;
         try {
-            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            ValueOperations<Serializable, Object> operations =
+                    redisTemplate.opsForValue();
             operations.set(key, value);
             redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
             result = true;
@@ -40,7 +41,8 @@ public class RedisUtils {
     public Object get(String key) {
         Object value = null;
         try {
-            ValueOperations valueOperations = redisTemplate.opsForValue();
+            ValueOperations<Serializable, Object> valueOperations =
+                    redisTemplate.opsForValue();
             value = valueOperations.get(key);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -48,4 +50,13 @@ public class RedisUtils {
         return value;
     }
 
+    public boolean del(String key) {
+        Boolean result = false;
+        try {
+            result = redisTemplate.delete(key);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
 }

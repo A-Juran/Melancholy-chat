@@ -56,11 +56,11 @@
 				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
 				gender: '',
 				sex: [{
-						value: 1,
+						value: "MAN",
 						label: '男'
 					},
 					{
-						value: 0,
+						value: "FEMALE",
 						label: '女'
 					}
 				],
@@ -122,6 +122,8 @@
 							request.userLogin({
 								code: res.code
 							});
+							//判断用户信息是否完善。
+							
 						}
 					}
 				});
@@ -158,7 +160,7 @@
 
 	.user-info {
 		position: absolute;
-		top: 50%;
+		top: 30%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 		text-align: center;
@@ -174,6 +176,7 @@
 		display: block;
 		width: 56px;
 		height: 56px;
+		
 	}
 
 	.user-info .user-nickname {
