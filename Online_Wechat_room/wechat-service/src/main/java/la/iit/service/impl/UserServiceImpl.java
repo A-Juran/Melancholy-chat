@@ -2,12 +2,13 @@ package la.iit.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import la.iit.config.WxAppIdConfig;
-import la.iit.dto.UserDTO;
+import la.iit.entity.dto.UserDTO;
 import la.iit.mapper.UserMapper;
-import la.iit.pojo.SysUser;
+import la.iit.entity.domain.OwUser;
 import la.iit.service.UserService;
 import la.iit.utils.GlobalParamsUtils;
 import la.iit.utils.OkHttpUtils;
@@ -26,7 +27,7 @@ import static la.iit.common.Constant.*;
  */
 @Service
 @Transactional
-public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser>
+public class UserServiceImpl extends ServiceImpl<UserMapper, OwUser>
         implements UserService {
 
     private final long LOGIN_EXPIRE_TIME = 3600 * 3;  //3小时免登录。
@@ -45,12 +46,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser>
 
     @Override
     public boolean getUserInfoImproveStatus() {
-        String openId = (String) redisUtils.get(LOGIN_USER_OPEN_ID.value()
-                + globalParamsUtils.getToken());
+        //String openId = (String) redisUtils.get(LOGIN_USER_OPEN_ID.value()
+        //+ globalParamsUtils.getToken());
+        String openId = globalParamsUtils.getCurrentUser().getOpenId();
 
-        SysUser currentUser =
-                getOne(Wrappers.<SysUser>lambdaQuery()
-                        .eq(SysUser::getOpenId, openId));
+        OwUser currentUser =
+                getOne(Wrappers.<OwUser>lambdaQuery()
+                        .eq(OwUser::getOpenId, openId));
 
         return currentUser.isImprove();
     }
@@ -60,17 +62,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser>
         JSONObject wxParams = getWxParams(code);
         String OpenId = wxParams.get("openid").toString();
         String unionId = wxParams.get("unionid").toString();
-        SysUser currentUser =
-                getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getOpenId, OpenId));
+        OwUser currentUser =
+                getOne(Wrappers.<OwUser>lambdaQuery().eq(OwUser::getOpenId, OpenId));
         String token = UUID.randomUUID().toString().replace("-", "");
-        SysUser sysUser = null;
+        OwUser owUser = null;
         if (currentUser == null) {
-            sysUser = new SysUser().setOpenId(OpenId)
+            owUser = new OwUser().setOpenId(OpenId)
                     .setUnionId(unionId);
-            save(sysUser);
+            save(owUser);
         }
         redisUtils.set(LOGIN_USER.value() + token,
-                currentUser == null ? sysUser : currentUser,
+                currentUser == null ? owUser : currentUser,
                 LOGIN_EXPIRE_TIME);
         redisUtils.set(LOGIN_USER_OPEN_ID.value() + token
                 , OpenId, LOGIN_EXPIRE_TIME);
@@ -79,35 +81,52 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser>
 
     @Override
     public void updateUserInfo(UserDTO userDTO) {
-        SysUser currentLoginUser =
-                (SysUser) redisUtils.get(LOGIN_USER.value() + globalParamsUtils.getToken());
-        Long userId = currentLoginUser.getId();
-        SysUser one = getOne(Wrappers.lambdaQuery(SysUser.class)
-                .eq(SysUser::getId, userId));
-        BeanUtils.copyProperties(userDTO,
-                one);
+        /*
+            查询用户信息保证数据正常
+         */
+        OwUser currentLoginUser = globalParamsUtils.getCurrentUser();
+        OwUser one = getOne(Wrappers.lambdaQuery(OwUser.class)
+                .eq(OwUser::getId, currentLoginUser.getId()));
+        //通过BeanUtils进行参数拷贝。
+        BeanUtils.copyProperties(userDTO, one);
         currentLoginUser.setImprove(true);
+        /*
+            1、更新用户信息
+            2、删除redis缓存、再将redis中用户数据进行更新。
+         */
         updateById(one);
         redisUtils.del(LOGIN_USER.value() + globalParamsUtils.getToken());
         String openid =
                 (String) redisUtils.get(LOGIN_USER_OPEN_ID.value() + globalParamsUtils.getToken());
-        SysUser currentUser =
-                getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getOpenId, openid));
+        OwUser currentUser =
+                getOne(Wrappers.<OwUser>lambdaQuery().eq(OwUser::getOpenId, openid));
         redisUtils.set(LOGIN_USER.value() + globalParamsUtils.getToken(),
                 currentUser,
                 LOGIN_EXPIRE_TIME);
     }
 
     @Override
-    public SysUser getCurrentUserInfo() {
+    public OwUser getCurrentUserInfo() {
+        /*
+            判断用户信息完善状态
+            1、未完成抛出异常
+            2、完成从缓存取出用户信息/缓存中没有数据则从数据库中获取。
+         */
         boolean userInfoImproveStatus =
                 getUserInfoImproveStatus();
         Assert.isTrue(userInfoImproveStatus,
                 "Please improve user information!");
-        String openId =
-                (String) redisUtils.get(LOGIN_USER_OPEN_ID.value() + globalParamsUtils.getToken());
-        Assert.notEmpty(openId, "openId is not empty!");
-        return getOne(Wrappers.lambdaQuery(SysUser.class).eq(SysUser::getOpenId, openId));
+        OwUser currentUser = null;
+        currentUser = globalParamsUtils.getCurrentUser();
+        if (ObjectUtils.isEmpty(currentUser)) {
+            String openId =
+                    (String) redisUtils.get(LOGIN_USER_OPEN_ID.value() + globalParamsUtils.getToken());
+            Assert.notEmpty(openId,
+                    "openId is not empty!");
+            currentUser = getOne(Wrappers.lambdaQuery(OwUser.class).eq(OwUser::getOpenId, openId));
+        }
+
+        return currentUser;
     }
 
     //getOPenId and Other

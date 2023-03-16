@@ -1,6 +1,7 @@
 package la.iit.security.filter;
 
 import la.iit.annotation.VisitLimit;
+import la.iit.entity.domain.OwUser;
 import la.iit.utils.GlobalParamsUtils;
 import la.iit.utils.IPUtils;
 import la.iit.utils.RedisUtils;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
+import static la.iit.common.Constant.LOGIN_USER;
 import static la.iit.common.Constant.LOGIN_USER_OPEN_ID;
 
 /**
@@ -38,7 +40,12 @@ public class VisitLimitInterceptor implements HandlerInterceptor {
         if (!ObjectUtils.isEmpty(token)) {
             String openId = (String) redisServer.get(LOGIN_USER_OPEN_ID.value() + token);
             if (!ObjectUtils.isEmpty(openId)) {
+                //设置token
                 globalParamsUtils.setToken(token);
+                //设置当前登录用户信息
+                OwUser currentUser =
+                        (OwUser) redisServer.get(LOGIN_USER.value() + token);
+                globalParamsUtils.setCurrentUser(currentUser);
             }
         }
         if (handler instanceof HandlerMethod) {

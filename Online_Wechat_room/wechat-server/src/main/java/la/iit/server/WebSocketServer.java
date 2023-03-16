@@ -2,6 +2,7 @@ package la.iit.server;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import la.iit.utils.GlobalParamsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,15 +19,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * webSocket服务端
  */
 @Component
-@ServerEndpoint("/websocket/server/{uId}")
+@ServerEndpoint("/websocket/server")
 @Slf4j
 public class WebSocketServer {
 
-   //记录当前连接数量，设置为线程安全。
+    //记录当前连接数量，设置为线程安全。
     private static int onlineClientCount = 0;
 
     // concurrentHashMap包是线程安全的set，用来存放每个客户端对应的webSocket对象。
-    private static ConcurrentHashMap<String,WebSocketServer> webSocketServerConcurrentHashMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, WebSocketServer> webSocketServerConcurrentHashMap = new ConcurrentHashMap<>();
 
     //与每个客户端连接的会话，通过它来给客户端发送数据。
     private Session session;
@@ -34,26 +35,30 @@ public class WebSocketServer {
     //接收客户信息的Uid。
     private String uid = "";
 
+    private GlobalParamsUtils globalParamsUtils;
+
+    public WebSocketServer(GlobalParamsUtils globalParamsUtils) {
+        this.globalParamsUtils = globalParamsUtils;
+    }
+
     /**
      * 与客户端建立成功返回信息
-     * @param session   当前登录客户连接
-     * @param uid   当前登录用户Id
+     *
+     * @param session 当前登录客户连接
      */
     @OnOpen
-    public void  onOpen(Session session,@PathParam("uid") String uid){
+    public void onOpen(Session session) {
         this.session = session;
-        this.uid = uid;
-
-        if(webSocketServerConcurrentHashMap.contains(uid)){
+        this.uid = globalParamsUtils
+                .getCurrentUser().getId().toString();
+        if (webSocketServerConcurrentHashMap.contains(uid)) {
             webSocketServerConcurrentHashMap.remove(uid);
-            webSocketServerConcurrentHashMap.put(uid,this);
-        }else {
-            webSocketServerConcurrentHashMap.put(uid,this);
-
+            webSocketServerConcurrentHashMap.put(uid, this);
+        } else {
+            webSocketServerConcurrentHashMap.put(uid, this);
         }
 
-        log.info("连接用户{}，当前在线人数{}",uid,onlineClientCount);
-
+        log.info("连接用户{}，当前在线人数{}", uid, onlineClientCount);
         //连接后返回连接状态。
         try {
             sendMsg("连接成功");
@@ -64,24 +69,25 @@ public class WebSocketServer {
 
     /**
      * 信息发送
-     * @param message   发送报文。
-     * @param session   当前登录用户连接。
+     *
+     * @param message 发送报文。
+     * @param session 当前登录用户连接。
      */
     @OnMessage
-    public void onMessage(String message,Session session){
-        log.info("接收到的信息：{},所收到的报文：{}",message,session);
-        if (StringUtils.hasText(message)){
+    public void onMessage(String message, Session session) {
+        log.info("接收到的信息：{},所收到的报文：{}", message, session);
+        if (StringUtils.hasText(message)) {
             try {
                 //解析需要发送的报文
                 JSONObject jsonObject = JSON.parseObject(message);
                 //追加发送人，防止被串改。
-                jsonObject.put("sendUid",uid);
+                jsonObject.put("sendUid", uid);
                 String toUID = jsonObject.getString("toUID");
-                if (StringUtils.hasText(toUID) && webSocketServerConcurrentHashMap.containsKey(toUID)){
+                if (StringUtils.hasText(toUID) && webSocketServerConcurrentHashMap.containsKey(toUID)) {
                     webSocketServerConcurrentHashMap.get(toUID).sendMsg(jsonObject.toJSONString());
-                }else {
+                } else {
                     //若用户不在，则发送至mysql或者是redis，用户可进行二次查询。
-                    log.error("当前用户：{}，发送信息对象：{}已下线",uid,toUID);
+                    log.error("当前用户：{}，发送信息对象：{}已下线", uid, toUID);
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -98,41 +104,41 @@ public class WebSocketServer {
      */
     @OnError
     public void onError(Session session, Throwable error) {
-        log.error("用户错误:{}，原因：{}" , this.uid,error.getMessage());
+        log.error("用户错误:{}，原因：{}", this.uid, error.getMessage());
         error.printStackTrace();
     }
 
     /**
-     *  连接关闭。
+     * 连接关闭。
      */
     @OnClose
-    public void onClose(){
-        if (webSocketServerConcurrentHashMap.contains(uid)){
+    public void onClose() {
+        if (webSocketServerConcurrentHashMap.contains(uid)) {
             //从set中进行删除
             webSocketServerConcurrentHashMap.remove(uid);
             //减少在线人数
             subOnlineClientCount();
         }
-        log.info("用户：{}退出登录，当前在线人数：{}人",uid,onlineClientCount);
+        log.info("用户：{}退出登录，当前在线人数：{}人", uid, onlineClientCount);
     }
 
     /**
      * 发送自定义消息
      */
     public static void sendInfo(String message, @PathParam("uid") String uid) throws IOException {
-        log.info("发送消息到：{},发送的报文:{}" +uid,message);
+        log.info("发送消息到：{},发送的报文:{}" + uid, message);
         if (StringUtils.hasText(uid) && webSocketServerConcurrentHashMap.containsKey(uid)) {
             webSocketServerConcurrentHashMap.get(uid).sendMsg(message);
         } else {
-            log.error("用户：{}不在线！",uid);
+            log.error("用户：{}不在线！", uid);
         }
     }
 
 
-
     /**
      * 向当前登录用户返回信息。
-     * @param msg   返回信息
+     *
+     * @param msg 返回信息
      */
     private void sendMsg(String msg) throws IOException {
         this.session.getBasicRemote().sendText(msg);
@@ -144,15 +150,15 @@ public class WebSocketServer {
      * 2、增加在线人数。
      * 3、减少在线人数。
      */
-    private static synchronized int getOnlineClientCount(){
+    private static synchronized int getOnlineClientCount() {
         return onlineClientCount;
     }
 
-    private static synchronized void addOnlineClientCount(){
+    private static synchronized void addOnlineClientCount() {
         WebSocketServer.onlineClientCount++;
     }
 
-    private static synchronized void subOnlineClientCount(){
+    private static synchronized void subOnlineClientCount() {
         WebSocketServer.onlineClientCount--;
     }
 

@@ -1,4 +1,4 @@
-package la.iit.pojo;
+package la.iit.entity.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
@@ -16,9 +16,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_User")
+@TableName("ow_user")
 @Accessors(chain = true)
-public class SysUser{
+public class OwUser {
     //用户Id
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -45,10 +45,10 @@ public class SysUser{
     @TableField("version")
     private Long version;
     //创建时间
-    @TableField(value = "create_time",fill = FieldFill.INSERT)
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
     //更新时间
-    @TableField(value = "update_time",fill = FieldFill.UPDATE)
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private Date updateTime;
 
     /**

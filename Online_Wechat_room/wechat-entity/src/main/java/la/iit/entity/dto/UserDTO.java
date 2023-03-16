@@ -1,6 +1,6 @@
-package la.iit.dto;
+package la.iit.entity.dto;
 
-import la.iit.pojo.SysUser;
+import la.iit.entity.domain.OwUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,7 +46,7 @@ public class UserDTO {
     @Size(min = 2)
     @NotNull(message = "性别不能为空",
             groups = UserInfoUpdate.class)
-    private SysUser.Gender sex;
+    private OwUser.Gender sex;
 
 
     /**

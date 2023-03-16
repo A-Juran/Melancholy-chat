@@ -6,11 +6,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import la.iit.annotation.SysLogin;
 import la.iit.annotation.VisitLimit;
-import la.iit.dto.UserDTO;
-import la.iit.pojo.SysUser;
+import la.iit.entity.dto.UserDTO;
+import la.iit.entity.domain.OwUser;
 import la.iit.response.AjaxResult;
 import la.iit.service.UserService;
-import la.iit.vo.UserInfoVO;
+import la.iit.entity.vo.UserInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
@@ -36,12 +36,12 @@ public class UserController {
     @GetMapping("/getCurrentUserInfo")
     @Operation(summary = "获取当前登录用户信息")
     @SysLogin
-    @VisitLimit(limit = 1, sec = 60)
+    @VisitLimit(sec = 60, limit = 3)
     public AjaxResult getCurrentUserInfo() {
         UserInfoVO userBasicVO =
                 UserInfoVO.builder();
         try {
-            SysUser currentUserInfo = userService.getCurrentUserInfo();
+            OwUser currentUserInfo = userService.getCurrentUserInfo();
             BeanUtils.copyProperties(currentUserInfo, userBasicVO);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -52,7 +52,7 @@ public class UserController {
     @PutMapping("/updateUserInfo")
     @Operation(summary = "更新用户信息")
     @SysLogin
-    @VisitLimit(limit = 1, sec = 60)
+    @VisitLimit(sec = 60, limit = 3)
     public AjaxResult updateUserInfo(@RequestBody @Validated(UserDTO.UserInfoUpdate.class)
                                      UserDTO userDTO) {
         try {
@@ -66,7 +66,7 @@ public class UserController {
     @GetMapping("/getUserInfoPerStatus")
     @Operation(summary = "获取用户信息完善状态")
     @SysLogin
-    @VisitLimit(limit = 1, sec = 60)
+    @VisitLimit(sec = 60, limit = 3)
     public AjaxResult getUserInfoPerStatus() {
         boolean userInfoImproveStatus = false;
         try {
@@ -83,7 +83,7 @@ public class UserController {
     @PostMapping("/login")
     @Operation(summary = "用户登录/注册")
     @SysLogin
-    @VisitLimit(limit = 1, sec = 60)
+    @VisitLimit(sec = 60, limit = 3)
     public AjaxResult login(@RequestBody @Validated(UserDTO.UserLogin.class)
                             UserDTO userDTO) {
         String token = null;

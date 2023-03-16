@@ -1,6 +1,9 @@
 package la.iit.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import la.iit.annotation.SysLogin;
+import la.iit.annotation.VisitLimit;
 import la.iit.response.AjaxResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class ResourceController {
 
     @PostMapping("/uploadImages")
-    public AjaxResult uploadImages(MultipartFile[] multipartFiles){
+    @Operation(summary = "用户资源上传/头像")
+    @SysLogin
+    @VisitLimit(limit = 1, sec = 60)
+    public AjaxResult uploadImages(MultipartFile[] multipartFiles) {
         return null;
     }
 }

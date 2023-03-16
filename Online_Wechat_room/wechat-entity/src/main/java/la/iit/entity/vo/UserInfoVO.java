@@ -1,6 +1,6 @@
-package la.iit.vo;
+package la.iit.entity.vo;
 
-import la.iit.pojo.SysUser;
+import la.iit.entity.domain.OwUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class UserInfoVO {
 
     private String avatar;
 
-    private SysUser.Gender sex;
+    private OwUser.Gender sex;
 
     public static UserInfoVO builder(){
         return new UserInfoVO();
