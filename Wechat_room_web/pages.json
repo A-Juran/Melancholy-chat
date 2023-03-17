@@ -8,14 +8,6 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "消息列表",
@@ -39,6 +31,14 @@
 				"enablePullDownRefresh": false
 			}
 
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {
@@ -52,21 +52,29 @@
 	"tabBar": {
 		"backgroundColor": "#fff",
 		"borderStyle": "white",
+		"iconfontSrc": "/static/fonts/iconfont.ttf",
 		"list": [{
 			"text": "消息",
 			"pagePath": "pages/index/index",
-			"iconPath": "static/tabBar/message.png",
-			"selectedIconPath": "static/tabBar/message_Selected.png"
+			"iconfont": {
+				"text": "\ue648",
+				"selectedText": "\ue103",
+				"fontSize": "17px",
+				"color": "#000000",
+				"selectedColor": "#0000ff"
+			}
 		}, {
 			"text": "聊天室",
 			"pagePath": "pages/list/list",
 			"iconPath": "static/tabBar/list.png",
-			"selectedIconPath": "static/tabBar/liset_Selected.png"
+			"selectedIconPath": "static/tabBar/liset_Selected.png",
+			"fontSize": "17px"
 		}, {
 			"text": "我",
 			"pagePath": "pages/me/me",
 			"iconPath": "static/tabBar/me.png",
-			"selectedIconPath": "static/tabBar/me_Selected.png"
+			"selectedIconPath": "static/tabBar/me_Selected.png",
+			"fontSize": "17px"
 		}]
 	}
 }

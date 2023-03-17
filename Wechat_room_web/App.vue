@@ -13,6 +13,7 @@
 </script>
 
 <style>
+	@import url('./static/fonts/iconfont.css');
 	html,body {
 		font-size: 20.7px;
 	}
@@ -27,5 +28,19 @@
 		html,body {
 			font-size: 23px;
 		}
+	}
+	/* iconfont */
+	@font-face {
+	  font-family: 'iconfont';
+	  src: url('./static/fonts/iconfont.woff2?t=1679052190641') format('woff2'),
+	       url('./static/fonts/iconfont.woff?t=1679052190641') format('woff'),
+	       url('./static/fonts/iconfont.ttf?t=1679052190641') format('truetype');
+	}
+	.iconfont {
+	  font-family: "iconfont" !important;
+	  font-size: 16px;
+	  font-style: normal;
+	  -webkit-font-smoothing: antialiased;
+	  -moz-osx-font-smoothing: grayscale;
 	}
 </style>
