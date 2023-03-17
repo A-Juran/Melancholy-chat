@@ -128,8 +128,8 @@
 
 	.user-commiuncation .other-msg .avatar img,
 	.user-commiuncation .mine-msg .avatar img {
-		width: 2.3188rem;
-		height: 2.3188rem;
+		width: 3.5rem;
+		height: 3.5rem;
 		border-radius: 50%;
 	}
 
@@ -139,9 +139,9 @@
 		background-color: #0199fe;
 		border-radius: 10px;
 		margin-left: 8px;
-		padding: 6px 6px 10px 6px;
+		padding: 6px 8px 13px 8px;
 		color: #fff;
-		font-size: 0.7246rem;
+		font-size: 1.2rem;
 	}
 
 
@@ -171,6 +171,6 @@
 		display: flex;
 		justify-content: space-between;
 		box-sizing: border-box;
-		padding: 0 5px;
+		padding: 0 2rem;
 	}
 </style>

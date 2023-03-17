@@ -15,7 +15,7 @@
 <style>
 	@import url('./static/fonts/iconfont.css');
 	html,body {
-		font-size: 20.7px;
+		font-size: 10px;
 	}
 	
 	/* 解决当navigationStyle设为custom或titleNView设为false时，原生导航栏不显示 */
@@ -43,4 +43,17 @@
 	  -webkit-font-smoothing: antialiased;
 	  -moz-osx-font-smoothing: grayscale;
 	}
+	/* tabBar设置图标及字体大小 */
+	/* .uni-tabbar .uni-tabbar__item .uni-tabbar__bd div.uni-tabbar__icon{
+		width: 15px!important;
+		height: 15px!important;
+	}
+	.uni-tabbar .uni-tabbar__item .uni-tabbar__bd div.uni-tabbar__label{
+		font-size: 13px!important;
+	} */
+	
+	.box-bg > * {
+		font-size: 1rem;
+	}
+	
 </style>

@@ -52,29 +52,23 @@
 	"tabBar": {
 		"backgroundColor": "#fff",
 		"borderStyle": "white",
-		"iconfontSrc": "/static/fonts/iconfont.ttf",
+		"fontSize":"12px",
+		"iconWidth":"15px",
 		"list": [{
-			"text": "消息",
+			"text": "Msg",
 			"pagePath": "pages/index/index",
-			"iconfont": {
-				"text": "\ue648",
-				"selectedText": "\ue103",
-				"fontSize": "17px",
-				"color": "#000000",
-				"selectedColor": "#0000ff"
-			}
+			"iconPath": "static/tabBar/message.png",
+			"selectedIconPath": "static/tabBar/message_Selected.png"
 		}, {
-			"text": "聊天室",
+			"text": "Contacts",
 			"pagePath": "pages/list/list",
 			"iconPath": "static/tabBar/list.png",
-			"selectedIconPath": "static/tabBar/liset_Selected.png",
-			"fontSize": "17px"
+			"selectedIconPath": "static/tabBar/liset_Selected.png"
 		}, {
-			"text": "我",
+			"text": "Mine",
 			"pagePath": "pages/me/me",
 			"iconPath": "static/tabBar/me.png",
-			"selectedIconPath": "static/tabBar/me_Selected.png",
-			"fontSize": "17px"
+			"selectedIconPath": "static/tabBar/me_Selected.png"
 		}]
 	}
 }

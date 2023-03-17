@@ -4,9 +4,9 @@
 			<!-- 这里是状态栏 -->
 		</view>
 		
-		<view class="box-bg">
-			<uni-nav-bar height="50px" title="聊天室" />
-		</view>
+		<!-- <view class="box-bg">
+			<uni-nav-bar height="50px" title="Contacts" />
+		</view> -->
 
 		<!-- 添加按钮用户、加入群 -->
 		<view class="chat-user-group-add-icon">

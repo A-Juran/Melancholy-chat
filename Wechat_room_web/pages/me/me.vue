@@ -30,7 +30,7 @@
 				</uni-list>
 			</uni-section>
 			<uni-card>
-				<text>自然赋于人们的不调和还很多,人们自己萎缩堕落退步的也还很多,然而生命决不因此回头。</text>
+				<text style="font-size: 1.2rem;">自然赋于人们的不调和还很多,人们自己萎缩堕落退步的也还很多,然而生命决不因此回头。</text>
 			</uni-card>
 
 		</view>
@@ -46,7 +46,7 @@
 				},
 				extraIcon: {
 					color: '#4cd964',
-					size: '22',
+					size: '18',
 					type: 'gear-filled'
 				}
 			}
@@ -61,7 +61,7 @@
 	/* 背景图片 */
 	.user-background-wall {
 		width: 100%;
-		height: 9.6618rem;
+		height: 18rem;
 		background: url("@/static/user-info/user-background.png") no-repeat;
 		background-position: left bottom;
 		background-size: 100% auto;
@@ -76,7 +76,7 @@
 	/* 背景熊 */
 	.user-background-wall .run-bear {
 		width: 200px;
-		height: 5rem;
+		height: 9rem;
 		position: absolute;
 		bottom: 0;
 		left: 30%;
@@ -90,7 +90,7 @@
 		top: 20%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		font-size: 0.5797rem;
+		font-size:1rem;
 		color: #fff;
 		white-space: nowrap;
 	}
@@ -104,24 +104,22 @@
 	.current-user-info>image {
 		position: absolute;
 		right: 20%;
-		top: -3.8rem;
-
+		top: -7rem;
 		display: block;
-		width: 2.9917rem;
-		height: 2.9917rem;
+		width: 5.5rem;
+		height: 5.5rem;
 		border-radius: 50%;
 		margin: 0 auto;
 		margin-bottom: 5px;
 	}
 
-	.current-user-info>text {
-		font-size: 0.8rem;
+	.current-user-info > uni-card >text {
+		font-size: 1rem;
 	}
 
 	/* 设置熊跑动动画 */
 	@keyframes run {
 		0% {}
-
 		100% {
 			background-position: -1600px 0;
 		}
