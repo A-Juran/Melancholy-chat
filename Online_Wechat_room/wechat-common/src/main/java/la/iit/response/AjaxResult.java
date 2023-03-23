@@ -204,6 +204,18 @@ public class AjaxResult extends HashMap<String, Object>
      * @param data 数据对象
      * @return 警告消息
      */
+    public static AjaxResult failed(String msg)
+    {
+        return new AjaxResult(Type.Failed, msg);
+    }
+
+    /**
+     * 返回失败消息
+     *
+     * @param msg 返回内容
+     * @param data 数据对象
+     * @return 警告消息
+     */
     public static AjaxResult failed(String msg, Object data)
     {
         return new AjaxResult(Type.Failed, msg, data);

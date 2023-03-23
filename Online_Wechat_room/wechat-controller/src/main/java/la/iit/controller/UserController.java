@@ -16,6 +16,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static la.iit.common.Constant.USER_INFO_COMPLETE_BEGIN;
+import static la.iit.common.Constant.USER_INFO_COMPLETE_OK;
+
 /**
  * @author JuRan
  * @date 2023/1/20
@@ -75,8 +78,8 @@ public class UserController {
             throw new RuntimeException(e);
         }
         return userInfoImproveStatus ?
-                AjaxResult.success("已完善基础信息", true) :
-                AjaxResult.failed("未进行基础信息完善", false);
+                AjaxResult.success(USER_INFO_COMPLETE_OK.value(), true) :
+                AjaxResult.failed(USER_INFO_COMPLETE_BEGIN.value(), false);
 
     }
 

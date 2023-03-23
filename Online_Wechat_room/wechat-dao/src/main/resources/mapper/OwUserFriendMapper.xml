@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="la.iit.mapper.OwUserFriendMapper">
+
+    <resultMap id="BaseResultMap" type="la.iit.entity.domain.OwUserFriend">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="user_id" column="user_id" jdbcType="BIGINT"/>
+        <result property="friend_id" column="friend_id" jdbcType="BIGINT"/>
+        <result property="version" column="version" jdbcType="BIGINT"/>
+        <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,user_id,friedn_id,
+        version,create_time,update_time
+    </sql>
+
+    <select id="getUserFriendList" resultType="la.iit.entity.domain.OwUser">
+        SELECT ow_user.id, ow_user.nick_name, ow_user.avatar_url
+        FROM ow_user
+        WHERE ow_user.id IN (SELECT ow_user_friend.friend_id
+                             FROM ow_user
+                                      INNER JOIN ow_user_friend
+                                                 ON ow_user.id = ow_user_friend.user_id
+                             WHERE ow_user.id = #{currentLoginUserId}
+                               AND ow_user_friend.is_approval = 1)
+    </select>
+</mapper>

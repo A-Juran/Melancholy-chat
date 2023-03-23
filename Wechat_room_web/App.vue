@@ -14,6 +14,7 @@
 
 <style>
 	@import url('./static/fonts/iconfont.css');
+	
 	html,body {
 		font-size: 10px;
 	}

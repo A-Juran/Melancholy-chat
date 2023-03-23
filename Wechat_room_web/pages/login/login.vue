@@ -114,19 +114,27 @@
 			//用户进行登录
 			user_login() {
 				// 获取用户的信息
-				uni.login({
-					success: (res) => {
-						if (res.code) {
-							console.log(res.code);
-							//访问后台地址进行登录
-							request.userLogin({
-								code: res.code
-							});
-							//判断用户信息是否完善。
-							
-						}
+				console.log(123);
+				uni.getLocale({
+					type: 'wgs84',
+					success: function(res) {
+						console.log('当前位置的经度：' + res.longitude);
+						console.log('当前位置的纬度：' + res.latitude);
 					}
-				});
+				})
+				// uni.login({
+				// 	success: (res) => {
+				// 		if (res.code) {
+				// 			console.log(res.code);
+				// 			//访问后台地址进行登录
+				// 			request.userLogin({
+				// 				code: res.code
+				// 			});
+				// 			//判断用户信息是否完善。
+
+				// 		}
+				// 	}
+				// });
 			}
 		}
 	}
@@ -176,7 +184,7 @@
 		display: block;
 		width: 56px;
 		height: 56px;
-		
+
 	}
 
 	.user-info .user-nickname {

@@ -8,6 +8,14 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "消息列表",
@@ -33,12 +41,14 @@
 
 		},
 		{
-			"path": "pages/login/login",
+			"path": "pages/index/commiuncation/commiuncation",
 			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"navigationBarTitleText": "聊天",
+				"enablePullDownRefresh": true,
+				"app-plus": {
+					"softinputmode": "adjustResize"
+				}
 			}
-
 		}
 	],
 	"globalStyle": {
@@ -52,8 +62,8 @@
 	"tabBar": {
 		"backgroundColor": "#fff",
 		"borderStyle": "white",
-		"fontSize":"12px",
-		"iconWidth":"15px",
+		"fontSize": "12px",
+		"iconWidth": "15px",
 		"list": [{
 			"text": "Msg",
 			"pagePath": "pages/index/index",

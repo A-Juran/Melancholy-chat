@@ -2,6 +2,7 @@ package la.iit.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import la.iit.entity.domain.OwUser;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author JuRan

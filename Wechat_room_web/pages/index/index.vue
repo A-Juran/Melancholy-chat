@@ -3,10 +3,10 @@
 		<view class="status_bar">
 			<!-- 这里是状态栏 -->
 		</view>
-<!-- 
+
 		<view class="box">
-			<uni-nav-bar height="50px" title="Message" />
-		</view> -->
+			<uni-nav-bar height="45" title="消息" />
+		</view>
 
 		<!-- 头部 -->
 		<view class="chat-header">
@@ -31,7 +31,6 @@
 					2023-01-01
 				</view>
 			</view>
-
 			<!-- 我的聊天群列表 -->
 			<view class="chat-list-item">
 				<!-- 群头像、基础信息 -->
@@ -78,9 +77,9 @@
 
 		},
 		methods: {
-			toCommiuncation(){
+			toCommiuncation() {
 				uni.navigateTo({
-					url:"/pages/index/commiuncation/commiuncation"
+					url: "/pages/index/commiuncation/commiuncation"
 				})
 			}
 		}
@@ -88,22 +87,29 @@
 </script>
 
 <style>
+	:root {
+		
+	}
+
 	.chat-body {
 		width: 100%;
 		padding: 0px 0px 8px 0px;
 		box-sizing: border-box;
 	}
-	.chat-header{
+
+	.chat-header {
 		position: relative;
-		width:100%;
-	}
-	.chat-header,.chat-body .chat-list{
 		width: 100%;
-		padding:0 16px ;
+	}
+
+	.chat-header,
+	.chat-body .chat-list {
+		width: 100%;
+		padding: 0 16px;
 		box-sizing: border-box;
 	}
-	
-	.chat-header{
+
+	.chat-header {
 		padding: 0;
 	}
 
@@ -112,6 +118,11 @@
 		justify-content: space-between;
 		padding: 8px 0;
 		box-sizing: border-box;
+		position: relative;
+		/* 动画 */
+		/* animation: name duration timing-function delay iteration-count direction fill-mode; */
+		animation: chatItem 1s;
+		
 	}
 
 	.chat-body .chat-list .chat-list-item:not(:last-child) {
@@ -158,5 +169,16 @@
 		line-height: 2.8985rem;
 		text-align: center;
 		color: #ccc;
+	}
+
+	/* 动画-帧动画 */
+	@keyframes chatItem {
+		from {
+			top: 100px;
+		}
+
+		to {
+			top: 0px;
+		}
 	}
 </style>
