@@ -1,6 +1,6 @@
 const request = (config) => {
 	//配置公共请求地址
-	const BASE_URL = "http://localhost:8080";
+	const BASE_URL = "http://192.168.101.5:8080";
 	//设置请求header
 	let header
 	if (config.method == "post") {
@@ -22,6 +22,7 @@ const request = (config) => {
 				resolve(res.data);
 			},
 			fail: error => {
+				console.log(error);
 				reject(error);
 			}
 
@@ -29,5 +30,4 @@ const request = (config) => {
 
 	})
 }
-
 export default request;

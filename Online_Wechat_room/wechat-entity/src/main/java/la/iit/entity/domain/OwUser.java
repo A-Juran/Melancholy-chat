@@ -31,13 +31,12 @@ public class OwUser {
     //性别
     @TableField("sex")
     private Gender sex;
-    //用户唯一标识
-    @TableField("open_id")
-    private String openId;
-    //平台账号唯一标识
-    @TableField("union_id")
-    private String unionId;
-
+    //用户名
+    @TableField("username")
+    private String username;
+    //密码
+    @TableField("password")
+    private String password;
     @TableField("is_improve")
     private boolean isImprove;
     //版本/乐观锁字段

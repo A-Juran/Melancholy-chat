@@ -1,47 +1,36 @@
 <template>
-	<view>
-		<!-- 解决navigationStyle状态为custom问题。 -->
-		<view class="status_bar">
-			<!-- 这里是状态栏 -->
+	<view class="login-container">
+		<!-- Title -->
+		<view class="title">
+			Melancholy-Chat
 		</view>
-
-		<!-- 状态栏 -->
-		<view class="box">
-			<uni-nav-bar height="50px" title="授权登录" />
+		<!-- login|register -->
+		<view class="login-action">
+			<button type="default" @click="regLoginModel()">注册</button>
+			<button type="default" @click="tz()">登录</button>
+			<a href="#" class="forget-pwd">Forgot Password?</a>
 		</view>
-
-		<!-- 弹窗层 -->
-		<view class="applet-mask" v-if="isAuthority">
-			<view class="Applet-info">
-				<!-- 小程序logo。 -->
-				<img src="http://q2.qlogo.cn/headimg_dl?dst_uin=2369668922&spec=100" alt="">
-				<!-- 小程序介绍。 -->
-				<p class="Applet-desc">如需正常使用小程序的功能，请点击下方授权登录按钮，打开授权弹窗，并点击允许。</p>
-				<!-- 授权登录按钮。 -->
-				<button type="primary" class="authorities" size="mini" @click="user_login">授权登录</button>
+		<!-- login-model -->
+		<view :class="loginClassName">
+			<view class="login-reg-switch">
+				<text :class="tableLoginClass" @click="switchTab(1)">登录</text>
+				<text :class="tableRegClass" @click="switchTab(2)">注册</text>
 			</view>
-		</view>
-		<!-- 头像上传、设置昵称、设置性别 -->
-		<view class="user-info" v-else>
-			<form @submit="formSubmit" @reset="formReset">
-				<view class="user-avatar">
-					<button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-						<image class="avatar" :src="avatarUrl"></image>
-					</button>
+			<view class="input-item">
+				<input type="text" :adjust-position="false" placeholder="username">
+			</view>
+			<view class="input-item">
+				<input type="password" @focus="getCaptcha()" :adjust-position="false" placeholder="password">
+			</view>
+			<view class="input-item input-code">
+				<input type="text" :adjust-position="false" placeholder="code">
+				<view class="code-img">
+					<img :src="Captcha" alt="" @click="getCaptcha()">
 				</view>
-				<view class="user-nickname">
-					<input type="nickname" class="weui-input" placeholder="请输入昵称" />
-				</view>
-				<view class="user-sex">
-					<radio-group class="sexRadio" @change="sexChange" v-for="(item, index) in sex" :key="item.value">
-						{{item.label}}：
-						<radio color="#2DCF8C" :value="item.value + ''" :checked="index + 1 === gender" />
-					</radio-group>
-				</view>
-				<view class="submit">
-					<button type="primary" size="mini">进入聊天</button>
-				</view>
-			</form>
+			</view>
+			<view class="input-item">
+				<button @click="tz()">登录</button>
+			</view>
 		</view>
 	</view>
 </template>
@@ -49,72 +38,56 @@
 <script>
 	//使用自定义api
 	import request from '../../api/login/login.js';
+
 	export default {
 		data() {
 			return {
-				isAuthority: true,
-				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
-				gender: '',
-				sex: [{
-						value: "MAN",
-						label: '男'
-					},
-					{
-						value: "FEMALE",
-						label: '女'
-					}
-				],
-
+				loginRegModel: false,
+				loginClassName: 'login-model-init',
+				Captcha: "",
+				//登录样式
+				tableLoginClass:"switch-login switch-login-active",
+				//注册样式
+				tableRegClass:"switch-reg",
 			}
 		},
 		onLoad() {
-			console.log();
 		},
 		methods: {
-			sexChange(evt) { //性别选择
-				for (let i = 0; i < this.sex.length; i++) {
-					if (this.sex[i].value == evt.target.value) {
-						this.gender = i + 1; //把获取到的值赋值给 this.cityForm.gender
-						console.log(this.gender)
-						break;
-					}
+			switchTab(index) {
+				//选中设给谁设定样式
+				if (index === 2) {
+					this.tableLoginClass = "switch-login";
+					this.tableRegClass = "switch-reg switch-login-active";
+					return;
+
 				}
+				this.tableRegClass = "switch-reg";
+				this.tableLoginClass = "switch-login switch-login-active";
 			},
-			onGetUserInfo(e) {
-				console.log(e);
-			},
-			onChooseAvatar(e) {
-				const {
-					avatarUrl
-				} = e.detail
-				this.avatarUrl = avatarUrl;
-				console.log(this.avatarUrl);
-			},
-			formSubmit: function(e) {
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
-				var formdata = e.detail.value
-				uni.showModal({
-					content: '表单数据内容：' + JSON.stringify(formdata),
-					showCancel: false
-				});
-			},
-			formReset: function(e) {
-				console.log(e);
-				console.log('清空数据')
-			},
-			//获取用户基础信息
-			getUserProfile() {
-				uni.getUserProfile({
-					desc: '获取用户基础信息',
-					success: (res) => {
-						console.log(res);
-					}
+			tz() {
+				uni.switchTab({
+					url: '/pages/index/index'
 				})
+			},
+			getCaptcha() {
+				//获取验证码
+				request.getCaptcha()
+					.then(res => {
+						//设置图片
+						this.Captcha = res.image;
+						//保存Key
+					});
+			},
+			regLoginModel() {
+				//点击后为注册框注册animation
+				this.loginRegModel = true;
+				this.loginClassName = '';
+				this.loginClassName = "login-model";
 			},
 			//用户进行登录
 			user_login() {
 				// 获取用户的信息
-				console.log(123);
 				uni.getLocale({
 					type: 'wgs84',
 					success: function(res) {
@@ -141,108 +114,160 @@
 </script>
 
 <style>
-	.user-sex .sexRadio>radio,
-	.user-sex .sexRadio>b {
-		vertical-align: middle;
-	}
+	.input-code .code-img>img {}
 
-	.user-sex .sexRadio {
-		display: table-cell;
-		vertical-align: middle;
-	}
+	.input-code .code-img {}
 
-	.user-info .submit {
-		margin-top: 15px;
-	}
+	.input-code .verify-code>input {}
 
-	.user-info .user-sex>radio-group:not(:first-child) {
-		margin-left: 10px;
-	}
-
-	.user-info .user-sex {
+	.input-code {
 		display: flex;
-		font-size: 12px;
-		justify-content: flex-start;
-		margin-top: 12px;
 	}
 
-	.user-info {
+	/* 登录 */
+	.input-item>button {
+		border-radius: 30px;
+		background-color: #666666;
+		color: #fff;
+	}
+
+	.input-item>input:first-child {
+		margin-bottom: 1.2rem;
+	}
+
+	.input-item>input {
+		height: 4.5rem;
+		padding: 0 1.2rem 0 1.2rem;
+		background-color: #eee;
+		border-radius: 30px;
+	}
+
+	.login-reg-switch .switch-login,
+	.login-reg-switch .switch-reg {
+		display: inline-block;
+		color: #c5c5c5;
+		font-size: 1.3rem;
+		font-weight: 700;
+		margin-bottom: 1.2rem;
+		position: relative;
+	}
+
+	.login-reg-switch .switch-reg {
+		margin-left: 1.2rem;
+	}
+
+	/* 设置active选中效果 */
+	.login-reg-switch .switch-login-active::after {
+		display: block;
+		content: "";
+		width: 70%;
+		height: 2px;
+		background-color: #593cfb;
 		position: absolute;
-		top: 30%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+		bottom: -0.2rem;
+		left: 0;
+		border-radius: 30px;
+	}
+
+	.login-reg-switch .switch-login-active {
+		font-size: 1.6rem;
+		color: #000;
+	}
+
+	.input-item {}
+
+	/* login */
+	.login-container {
+		width: 100%;
+		height: 100vh;
+		position: relative;
+		background-image: url("../../static/bk.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+		z-index: 1;
+	}
+
+	.login-container .title {
+		display: block;
+		width: 20rem;
+		margin: 0 auto;
+		padding-top: 20rem;
+		color: #fff;
+		font-size: 2.5rem;
+		font-weight: 800;
+		z-index: 1;
+	}
+
+	.login-container .login-action {
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		padding: 5.5rem 0;
 		text-align: center;
 	}
 
-	.user-info .user-avatar .avatar-wrapper {
-		padding: 0;
-		width: 56px !important;
-		border-radius: 8px;
+	.login-container .login-action>button {
+		width: 80%;
+		color: #fff;
+		font-weight: 600;
 	}
 
-	.user-info .user-avatar .avatar-wrapper>image {
-		display: block;
-		width: 56px;
-		height: 56px;
-
+	.login-container .login-action>button:not(:last-child) {
+		margin-bottom: 1rem;
 	}
 
-	.user-info .user-nickname {
-		margin-top: 15px;
+	.login-container .login-action>button:nth-child(1) {
+		background-color: #593cfb;
 	}
 
-	.user-info .user-nickname .weui-input {
-		border: 1px solid #efefef;
-		width: 230px;
-		height: 35px;
-		padding: 5px 10px;
-		border-radius: 5px;
-		font-size: 12px;
+	.login-container .login-action>button:nth-child(2) {
+		color: #000;
+		background-color: #fff;
+	}
+
+	.login-container .login-action .forget-pwd {
+		font-size: 1.2rem;
+		color: #c5c5c5;
+		text-decoration: none;
+	}
+
+	.login-container .login-model-init {
+		width: 100%;
+		position: fixed;
+		display: none;
+	}
+
+	.login-container .login-model {
+		width: 100%;
+		height: 45rem;
+		position: fixed;
+		bottom: 0rem;
+		background-color: #fff;
+		border-radius: 3rem 3rem 0 0;
+		animation: loginModel-in 0.6s;
+		padding: 2rem 1.2rem 4rem 1.2rem;
 		box-sizing: border-box;
 	}
 
-	.box {
-		height: 50px;
+	/* 定义动画 */
+	@keyframes loginModel-in {
+		from {
+			bottom: -45rem;
+		}
+
+		to {
+			bottom: 0rem;
+		}
 	}
 
-	.applet-mask {
-		position: absolute;
-		width: 100vw;
-		height: 100vh;
-		top: 0;
-		left: 0;
-		z-index: 99;
-		background-color: rgba(0, 0, 0, 0.5);
-	}
+	/* 定义动画 */
+	@keyframes loginModel-out {
+		from {
+			bottom: 0rem;
+		}
 
-	.Applet-info {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 60%;
-		padding: 10px 15px;
-		border-radius: 8px;
-		transform: translate(-50%, -50%);
-		text-align: center;
-		background-color: #fff;
-		z-index: 100;
-	}
-
-	.Applet-info>img {
-		width: 65px;
-		height: 64px;
-		display: block;
-		margin: 0 auto;
-		border-radius: 50%;
-	}
-
-	.Applet-info .Applet-desc {
-		font-size: 13px;
-		margin-top: 12px;
-		color: #ccc9c7;
-	}
-
-	.Applet-info .authorities {
-		margin-top: 12px;
+		to {
+			bottom: -45rem;
+		}
 	}
 </style>

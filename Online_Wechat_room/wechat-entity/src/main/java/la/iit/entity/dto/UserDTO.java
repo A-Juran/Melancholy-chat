@@ -18,17 +18,27 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Data
 public class UserDTO {
+
     /**
-     * code
+     * 用户名
      */
-    @NotNull(message = "code不能为空", groups = UserLogin.class)
+    @NotNull(message = "用户名能为空", groups = {UserLogin.class, UserRegister.class})
     @Size(min = 2)
-    private String code;
+    private String username;
+
+    /**
+     * 用户名
+     */
+    @NotNull(message = "密码不能小于6位|不能为空", groups = {UserLogin.class,
+            UserRegister.class})
+    @Size(min = 6)
+    private String password;
 
     /**
      * 头像
      */
-    @NotNull(message = "头像不能为空", groups = UserInfoUpdate.class)
+    @NotNull(message = "头像不能为空", groups = {UserInfoUpdate.class,
+            UserRegister.class})
     @Size(min = 2)
     private String avatar;
 
@@ -36,7 +46,7 @@ public class UserDTO {
      * 昵称
      */
     @Size(min = 2)
-    @NotNull(message = "昵称不能为空", groups = UserInfoUpdate.class)
+    @NotNull(message = "昵称不能为空", groups = UserRegister.class)
     private String nickName;
 
 
@@ -44,8 +54,8 @@ public class UserDTO {
      * 性别
      */
     @Size(min = 2)
-    @NotNull(message = "性别不能为空",
-            groups = UserInfoUpdate.class)
+    @NotNull(message = "性别不能为空", groups = {UserInfoUpdate.class,
+            UserRegister.class})
     private OwUser.Gender sex;
 
 
@@ -55,6 +65,14 @@ public class UserDTO {
     public interface UserLogin {
 
     }
+
+    /**
+     * 登录
+     */
+    public interface UserRegister {
+
+    }
+
 
     /**
      * 注册

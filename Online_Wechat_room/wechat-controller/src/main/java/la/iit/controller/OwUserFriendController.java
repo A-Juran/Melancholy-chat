@@ -83,8 +83,9 @@ public class OwUserFriendController {
     @SysLogin
     @VisitLimit(sec = 60, limit = 3)
     public AjaxResult getUserFriendList() {
-        List<UserFriendListVO> userFriendList=
+        List<UserFriendListVO> userFriendList =
                 owUserFriendService.getUserFriendList();
-        return null;
+        return AjaxResult.success()
+                .put("friendList", userFriendList);
     }
 }

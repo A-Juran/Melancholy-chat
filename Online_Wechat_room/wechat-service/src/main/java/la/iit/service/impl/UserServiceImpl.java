@@ -1,14 +1,17 @@
 package la.iit.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.lang.UUID;
+import cn.hutool.crypto.digest.MD5;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wf.captcha.SpecCaptcha;
 import la.iit.config.WxAppIdConfig;
+import la.iit.entity.domain.OwUser;
 import la.iit.entity.dto.UserDTO;
 import la.iit.mapper.UserMapper;
-import la.iit.entity.domain.OwUser;
 import la.iit.service.UserService;
 import la.iit.utils.GlobalParamsUtils;
 import la.iit.utils.OkHttpUtils;
@@ -17,7 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
+import java.util.HashMap;
 
 import static la.iit.common.Constant.*;
 
@@ -31,6 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, OwUser>
         implements UserService {
 
     private final long LOGIN_EXPIRE_TIME = 3600 * 3;  //3小时免登录。
+    private final long CODE_EXPIRE_TIME = 300;  //3小时免登录。
 
     private RedisUtils redisUtils;
     private GlobalParamsUtils globalParamsUtils;
@@ -45,88 +49,41 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, OwUser>
     }
 
     @Override
-    public boolean getUserInfoImproveStatus() {
-        //String openId = (String) redisUtils.get(LOGIN_USER_OPEN_ID.value()
-        //+ globalParamsUtils.getToken());
-        String openId = globalParamsUtils.getCurrentUser().getOpenId();
-
-        OwUser currentUser =
-                getOne(Wrappers.<OwUser>lambdaQuery()
-                        .eq(OwUser::getOpenId, openId));
-
-        return currentUser.isImprove();
-    }
-
-    @Override
-    public String saveUserInfo(String code) {
-        JSONObject wxParams = getWxParams(code);
-        String OpenId = wxParams.get("openid").toString();
-        String unionId = wxParams.get("unionid").toString();
-        OwUser currentUser =
-                getOne(Wrappers.<OwUser>lambdaQuery().eq(OwUser::getOpenId, OpenId));
-        String token = UUID.randomUUID().toString().replace("-", "");
-        OwUser owUser = null;
-        if (currentUser == null) {
-            owUser = new OwUser().setOpenId(OpenId)
-                    .setUnionId(unionId);
-            save(owUser);
-        }
-        redisUtils.set(LOGIN_USER.value() + token,
-                currentUser == null ? owUser : currentUser,
-                LOGIN_EXPIRE_TIME);
-        redisUtils.set(LOGIN_USER_OPEN_ID.value() + token
-                , OpenId, LOGIN_EXPIRE_TIME);
+    public String login(String username,
+                        String password) {
+        LambdaQueryWrapper<OwUser> login = Wrappers.<OwUser>lambdaQuery()
+                .eq(OwUser::getUsername, username)
+                .eq(OwUser::getPassword, MD5.create().digestHex(password));
+        OwUser currentUser = getOne(login);
+        Assert.notNull(currentUser, LOGIN_FAILED.value());
+        //redis中存储当前登录用户数据
+        String token =
+                UUID.randomUUID().toString().replace("-", "");
+        redisUtils.set(LOGIN_USER + token, currentUser, LOGIN_EXPIRE_TIME);
+        globalParamsUtils.setCurrentUser(currentUser);
         return token;
     }
 
     @Override
-    public void updateUserInfo(UserDTO userDTO) {
-        /*
-            查询用户信息保证数据正常
-         */
-        OwUser currentLoginUser = globalParamsUtils.getCurrentUser();
-        OwUser one = getOne(Wrappers.lambdaQuery(OwUser.class)
-                .eq(OwUser::getId, currentLoginUser.getId()));
-        //通过BeanUtils进行参数拷贝。
-        BeanUtils.copyProperties(userDTO, one);
-        currentLoginUser.setImprove(true);
-        /*
-            1、更新用户信息
-            2、删除redis缓存、再将redis中用户数据进行更新。
-         */
-        updateById(one);
-        redisUtils.del(LOGIN_USER.value() + globalParamsUtils.getToken());
-        String openid =
-                (String) redisUtils.get(LOGIN_USER_OPEN_ID.value() + globalParamsUtils.getToken());
-        OwUser currentUser =
-                getOne(Wrappers.<OwUser>lambdaQuery().eq(OwUser::getOpenId, openid));
-        redisUtils.set(LOGIN_USER.value() + globalParamsUtils.getToken(),
-                currentUser,
-                LOGIN_EXPIRE_TIME);
+    public void register(UserDTO userDTO) {
+        OwUser owUser = new OwUser();
+        BeanUtils.copyProperties(userDTO, owUser);
+        owUser.setPassword(MD5.create().digestHex(owUser.getPassword()));
+        save(owUser);
     }
 
     @Override
-    public OwUser getCurrentUserInfo() {
-        /*
-            判断用户信息完善状态
-            1、未完成抛出异常
-            2、完成从缓存取出用户信息/缓存中没有数据则从数据库中获取。
-         */
-        boolean userInfoImproveStatus =
-                getUserInfoImproveStatus();
-        Assert.isTrue(userInfoImproveStatus,
-                "Please improve user information!");
-        OwUser currentUser = null;
-        currentUser = globalParamsUtils.getCurrentUser();
-        if (ObjectUtils.isEmpty(currentUser)) {
-            String openId =
-                    (String) redisUtils.get(LOGIN_USER_OPEN_ID.value() + globalParamsUtils.getToken());
-            Assert.notEmpty(openId,
-                    "openId is not empty!");
-            currentUser = getOne(Wrappers.lambdaQuery(OwUser.class).eq(OwUser::getOpenId, openId));
-        }
-
-        return currentUser;
+    public HashMap<String, Object> captcha() {
+        SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
+        String verCode = specCaptcha.text().toLowerCase();
+        String key = java.util.UUID.randomUUID().toString();
+        // 存入redis并设置过期时间为30分钟
+        redisUtils.set(key, verCode, CODE_EXPIRE_TIME);
+        HashMap<String, Object> stringObjectHashMap
+                = new HashMap<>();
+        stringObjectHashMap.put("key", key);
+        stringObjectHashMap.put("image", specCaptcha.toBase64());
+        return stringObjectHashMap;
     }
 
     //getOPenId and Other

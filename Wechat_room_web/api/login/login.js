@@ -11,6 +11,17 @@ const userLogin = (data) =>{
 };
 
 
+//获取验证码
+const getCaptcha = () =>{
+	let resData = request({
+		method: "GET", // 请求方式
+		url: '/user/captcha', // 请求url
+	});
+	return resData;
+};
+
+
 export default {
-	userLogin
+	userLogin,
+	getCaptcha
 }

@@ -62,20 +62,17 @@
 	"tabBar": {
 		"backgroundColor": "#fff",
 		"borderStyle": "white",
-		"fontSize": "12px",
-		"iconWidth": "15px",
+		"fontSize": "13px",
+		"iconWidth": "20px",
 		"list": [{
-			"text": "Msg",
 			"pagePath": "pages/index/index",
 			"iconPath": "static/tabBar/message.png",
 			"selectedIconPath": "static/tabBar/message_Selected.png"
 		}, {
-			"text": "Contacts",
 			"pagePath": "pages/list/list",
 			"iconPath": "static/tabBar/list.png",
 			"selectedIconPath": "static/tabBar/liset_Selected.png"
 		}, {
-			"text": "Mine",
 			"pagePath": "pages/me/me",
 			"iconPath": "static/tabBar/me.png",
 			"selectedIconPath": "static/tabBar/me_Selected.png"

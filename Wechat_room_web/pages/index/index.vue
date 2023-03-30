@@ -3,17 +3,15 @@
 		<view class="status_bar">
 			<!-- 这里是状态栏 -->
 		</view>
-
-		<view class="box">
-			<uni-nav-bar height="45" title="消息" />
+		<view class="chat-tabbar">
+			<view class="text">
+				Message
+			</view>
+			<view class="search">
+				<i class=""></i>
+				<input type="text" @focus="searchFocus(true)" @blur="searchFocus(false)" :class="searchClass" placeholder="Search">
+			</view>
 		</view>
-
-		<!-- 头部 -->
-		<view class="chat-header">
-			<uni-search-bar placeholder="搜索" bgColor="#EEEEEE" />
-			<!-- <uni-notice-bar show-icon style="height: 20px;" scrollable text="JR-在线聊天室,欢迎您的使用." /> -->
-		</view>
-
 		<!-- 群列表 -->
 		<view class="chat-list">
 			<!-- 我的聊天群列表 -->
@@ -22,8 +20,8 @@
 				<view class="chat-object-info">
 					<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=21171326&spec=100" mode=""></image>
 					<view class="chat-object-bease-info">
-						<p>C++</p>
-						<text>[未读] 我学不会</text>
+						<p>Mr.Fan</p>
+						<text>So</text>
 					</view>
 				</view>
 				<!-- 聊天时间 -->
@@ -37,8 +35,8 @@
 				<view class="chat-object-info">
 					<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=2369668922&spec=100" mode=""></image>
 					<view class="chat-object-bease-info">
-						<p>JAVA</p>
-						<text>[未读] 怎么进阶?</text>
+						<p>Mr.H</p>
+						<text>Ok</text>
 					</view>
 				</view>
 				<!-- 聊天时间 -->
@@ -52,8 +50,8 @@
 				<view class="chat-object-info">
 					<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=12540701&spec=100" mode=""></image>
 					<view class="chat-object-bease-info">
-						<p>VUE</p>
-						<text>[未读] 就会点皮毛?</text>
+						<p>Su Shan</p>
+						<text>Just Do it</text>
 					</view>
 				</view>
 				<!-- 聊天时间 -->
@@ -70,13 +68,22 @@
 		data() {
 			return {
 				title: 'Hello',
-				search: ''
+				search: '',
+				searchClass:"input"
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
+			searchFocus(status){
+				if(status){
+					this.searchClass = "";
+					this.searchClass = "searchInput";
+					return;
+				}
+				this.searchClass = "input";
+			},
 			toCommiuncation() {
 				uni.navigateTo({
 					url: "/pages/index/commiuncation/commiuncation"
@@ -87,8 +94,42 @@
 </script>
 
 <style>
-	:root {
-		
+	.chat-tabbar .search .searchInput{
+		height: 4rem;
+		background-color: #f4eded;
+		border-radius: 3rem;
+		padding: 0 0 0 3rem;
+		animation: 0.3s searchAnimationIn;
+	}
+	.chat-tabbar .search .input {
+		width: 10rem;
+		height: 4rem;
+		background-color: #f4eded;
+		border-radius: 3rem;
+		padding: 0 0 0 3rem;
+		animation: 0.3s searchAnimationOut;
+	}
+
+	.chat-tabbar .search {
+		padding: 0 .3px;
+		box-sizing: border-box;
+	}
+
+	.chat-tabbar .text {
+		font-size: 3rem;
+		font-weight: 700;
+		vertical-align: middle;
+	}
+
+	.chat-tabbar {
+		width: 100%;
+		height: 4.5rem;
+		line-height: 4.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: .8rem 0.8rem;
+		box-sizing: border-box;
 	}
 
 	.chat-body {
@@ -105,7 +146,7 @@
 	.chat-header,
 	.chat-body .chat-list {
 		width: 100%;
-		padding: 0 16px;
+		padding: 1.6rem 1.6rem 0 1.6rem;
 		box-sizing: border-box;
 	}
 
@@ -122,7 +163,7 @@
 		/* 动画 */
 		/* animation: name duration timing-function delay iteration-count direction fill-mode; */
 		animation: chatItem 1s;
-		
+
 	}
 
 	.chat-body .chat-list .chat-list-item:not(:last-child) {
@@ -169,6 +210,28 @@
 		line-height: 2.8985rem;
 		text-align: center;
 		color: #ccc;
+	}
+	
+	/* 动画-帧动画 */
+	@keyframes searchAnimationOut {
+		from {
+			width: 16rem;
+		}
+	
+		to {
+			width: 10rem;
+		}
+	}
+	
+	/* 动画-帧动画 */
+	@keyframes searchAnimationIn {
+		from {
+			width: 10rem;
+		}
+	
+		to {
+			width: 16rem;
+		}
 	}
 
 	/* 动画-帧动画 */
