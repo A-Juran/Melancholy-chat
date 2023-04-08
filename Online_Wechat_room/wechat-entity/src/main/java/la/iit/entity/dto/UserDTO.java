@@ -22,7 +22,7 @@ public class UserDTO {
     /**
      * 用户名
      */
-    @NotNull(message = "用户名能为空", groups = {UserLogin.class, UserRegister.class})
+    @NotNull(message = "用户名不能为空", groups = {UserLogin.class, UserRegister.class})
     @Size(min = 2)
     private String username;
 
@@ -37,8 +37,7 @@ public class UserDTO {
     /**
      * 头像
      */
-    @NotNull(message = "头像不能为空", groups = {UserInfoUpdate.class,
-            UserRegister.class})
+    @NotNull(message = "头像不能为空", groups = {UserInfoUpdate.class})
     @Size(min = 2)
     private String avatar;
 
@@ -54,8 +53,7 @@ public class UserDTO {
      * 性别
      */
     @Size(min = 2)
-    @NotNull(message = "性别不能为空", groups = {UserInfoUpdate.class,
-            UserRegister.class})
+    @NotNull(message = "性别不能为空", groups = {UserInfoUpdate.class})
     private OwUser.Gender sex;
 
 

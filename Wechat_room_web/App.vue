@@ -14,9 +14,10 @@
 
 <style>
 	@import url('./static/fonts/iconfont.css');
-	
-	html,body {
+	@import '@/static/fonts/RemixIcon_Fonts_v2.5.0/fonts/remixicon.css';
+	html,body,a {
 		font-size: 10px;
+		text-decoration: none;
 	}
 	
 	/* 解决当navigationStyle设为custom或titleNView设为false时，原生导航栏不显示 */
@@ -36,6 +37,7 @@
 	  src: url('./static/fonts/iconfont.woff2?t=1679052190641') format('woff2'),
 	       url('./static/fonts/iconfont.woff?t=1679052190641') format('woff'),
 	       url('./static/fonts/iconfont.ttf?t=1679052190641') format('truetype');
+		   
 	}
 	.iconfont {
 	  font-family: "iconfont" !important;

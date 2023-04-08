@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wf.captcha.SpecCaptcha;
+import la.iit.common.exception.UserAccountDisabledException;
+import la.iit.common.exception.UserIsExistException;
 import la.iit.config.WxAppIdConfig;
 import la.iit.entity.domain.OwUser;
 import la.iit.entity.dto.UserDTO;
@@ -50,12 +52,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, OwUser>
 
     @Override
     public String login(String username,
-                        String password) {
+                        String password) throws Exception {
         LambdaQueryWrapper<OwUser> login = Wrappers.<OwUser>lambdaQuery()
                 .eq(OwUser::getUsername, username)
                 .eq(OwUser::getPassword, MD5.create().digestHex(password));
         OwUser currentUser = getOne(login);
         Assert.notNull(currentUser, LOGIN_FAILED.value());
+        if (!currentUser.isActive()){
+            throw new UserAccountDisabledException();
+        }
         //redis中存储当前登录用户数据
         String token =
                 UUID.randomUUID().toString().replace("-", "");
@@ -65,7 +70,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, OwUser>
     }
 
     @Override
-    public void register(UserDTO userDTO) {
+    public void register(UserDTO userDTO) throws UserIsExistException {
+        //判断用户是否注册
+        String username = userDTO.getUsername();
+        LambdaQueryWrapper<OwUser> checkUserIsExist = Wrappers.<OwUser>lambdaQuery()
+                .eq(OwUser::getUsername, username);
+        OwUser one = getOne(checkUserIsExist);
+        if (one != null) {
+            throw new UserIsExistException("用户名已经存在");
+        }
+        //进行用户注册
         OwUser owUser = new OwUser();
         BeanUtils.copyProperties(userDTO, owUser);
         owUser.setPassword(MD5.create().digestHex(owUser.getPassword()));

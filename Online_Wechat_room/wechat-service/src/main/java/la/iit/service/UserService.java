@@ -1,8 +1,9 @@
 package la.iit.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import la.iit.entity.dto.UserDTO;
+import la.iit.common.exception.UserIsExistException;
 import la.iit.entity.domain.OwUser;
+import la.iit.entity.dto.UserDTO;
 
 import java.util.HashMap;
 
@@ -12,9 +13,9 @@ import java.util.HashMap;
  */
 public interface UserService extends IService<OwUser> {
     //登录
-    String login(String username, String password);
+    String login(String username, String password) throws Exception;
     //注册
-    void register(UserDTO userDTO);
+    void register(UserDTO userDTO) throws UserIsExistException;
     //验证码
     HashMap<String, Object> captcha();
 }

@@ -39,6 +39,9 @@ public class OwUser {
     private String password;
     @TableField("is_improve")
     private boolean isImprove;
+    //是否激活
+    @TableField("is_active")
+    private boolean isActive;
     //版本/乐观锁字段
     @Version
     @TableField("version")

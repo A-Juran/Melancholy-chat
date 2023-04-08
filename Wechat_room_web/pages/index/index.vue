@@ -1,17 +1,6 @@
 <template>
 	<view class="chat-body">
-		<view class="status_bar">
-			<!-- 这里是状态栏 -->
-		</view>
-		<view class="chat-tabbar">
-			<view class="text">
-				Message
-			</view>
-			<view class="search">
-				<i class=""></i>
-				<input type="text" @focus="searchFocus(true)" @blur="searchFocus(false)" :class="searchClass" placeholder="Search">
-			</view>
-		</view>
+		<Header tabbarName="Message" />
 		<!-- 群列表 -->
 		<view class="chat-list">
 			<!-- 我的聊天群列表 -->
@@ -64,26 +53,20 @@
 </template>
 
 <script>
+	import Header from '../common/Header.vue';
 	export default {
+		components: {
+			Header
+		},
 		data() {
 			return {
 				title: 'Hello',
-				search: '',
-				searchClass:"input"
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-			searchFocus(status){
-				if(status){
-					this.searchClass = "";
-					this.searchClass = "searchInput";
-					return;
-				}
-				this.searchClass = "input";
-			},
 			toCommiuncation() {
 				uni.navigateTo({
 					url: "/pages/index/commiuncation/commiuncation"
@@ -94,44 +77,6 @@
 </script>
 
 <style>
-	.chat-tabbar .search .searchInput{
-		height: 4rem;
-		background-color: #f4eded;
-		border-radius: 3rem;
-		padding: 0 0 0 3rem;
-		animation: 0.3s searchAnimationIn;
-	}
-	.chat-tabbar .search .input {
-		width: 10rem;
-		height: 4rem;
-		background-color: #f4eded;
-		border-radius: 3rem;
-		padding: 0 0 0 3rem;
-		animation: 0.3s searchAnimationOut;
-	}
-
-	.chat-tabbar .search {
-		padding: 0 .3px;
-		box-sizing: border-box;
-	}
-
-	.chat-tabbar .text {
-		font-size: 3rem;
-		font-weight: 700;
-		vertical-align: middle;
-	}
-
-	.chat-tabbar {
-		width: 100%;
-		height: 4.5rem;
-		line-height: 4.5rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: .8rem 0.8rem;
-		box-sizing: border-box;
-	}
-
 	.chat-body {
 		width: 100%;
 		padding: 0px 0px 8px 0px;
@@ -211,24 +156,24 @@
 		text-align: center;
 		color: #ccc;
 	}
-	
+
 	/* 动画-帧动画 */
 	@keyframes searchAnimationOut {
 		from {
 			width: 16rem;
 		}
-	
+
 		to {
 			width: 10rem;
 		}
 	}
-	
+
 	/* 动画-帧动画 */
 	@keyframes searchAnimationIn {
 		from {
 			width: 10rem;
 		}
-	
+
 		to {
 			width: 16rem;
 		}

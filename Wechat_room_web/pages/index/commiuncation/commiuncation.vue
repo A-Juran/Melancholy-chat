@@ -5,7 +5,7 @@
 		</view>
 
 		<view class="box">
-			<uni-nav-bar height="3rem" title="聊天" />
+			<uni-nav-bar height="3rem" title="Mr.Fan" />
 		</view>
 		<view class="user-commiuncation">
 			<!-- 好友信息 -->
