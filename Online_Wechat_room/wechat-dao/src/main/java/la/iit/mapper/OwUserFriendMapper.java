@@ -10,7 +10,6 @@ import java.util.List;
 /**
 * @author Juran
 * @createDate 2023-03-22 16:17:15
-* @Entity generator.domain.OwUserFriend
 */
 public interface OwUserFriendMapper extends BaseMapper<OwUserFriend> {
     //获取好友列表

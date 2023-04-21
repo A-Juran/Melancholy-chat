@@ -51,8 +51,7 @@
 		</view>
 	</view>
 </template>
-
-<script>
+<script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 	import Header from '../common/Header.vue';
 	export default {
 		components: {
@@ -64,9 +63,13 @@
 			}
 		},
 		onLoad() {
-
+			console.log(this.$store.getters.GET_TOKEN);
 		},
 		methods: {
+			set_username() {
+				this.$store.commit('SET_TOKEN', "HH");
+				console.log(this.$store.state.token);
+			},
 			toCommiuncation() {
 				uni.navigateTo({
 					url: "/pages/index/commiuncation/commiuncation"
@@ -112,7 +115,7 @@
 	}
 
 	.chat-body .chat-list .chat-list-item:not(:last-child) {
-		box-shadow: 0px 0.3px 0px rgba(0, 0, 0, .1);
+		/* box-shadow: 0px 0.3px 0px rgba(0, 0, 0, .1); */
 	}
 
 	.chat-body .chat-list .chat-list-item .chat-object-info {

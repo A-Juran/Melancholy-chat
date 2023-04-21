@@ -364,7 +364,8 @@
 		display: block;
 		width: 20rem;
 		margin: 0 auto;
-		padding-top: 20rem;
+		padding-top: 30%;
+		text-align: center;
 		color: #fff;
 		font-size: 2.5rem;
 		font-weight: 800;

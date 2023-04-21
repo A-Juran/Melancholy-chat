@@ -30,6 +30,9 @@
 			}
 		},
 		{
+			"path": "pages/search/Search",
+			"style": {}
+		}, {
 			"path": "pages/me/me",
 			"style": {}
 		}, {
@@ -72,6 +75,10 @@
 			"pagePath": "pages/list/list",
 			"iconPath": "static/tabBar/list.png",
 			"selectedIconPath": "static/tabBar/liset_Selected.png"
+		}, {
+			"pagePath": "pages/search/Search",
+			"iconPath": "static/tabBar/search.png",
+			"selectedIconPath": "static/tabBar/search_Selected.png"
 		}, {
 			"pagePath": "pages/me/me",
 			"iconPath": "static/tabBar/me.png",

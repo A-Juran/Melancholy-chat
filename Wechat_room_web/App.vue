@@ -26,11 +26,12 @@
 		width: 100%;
 	}
 	
-	@media screen and (min-width:430px) {
+	/* @media screen and (min-width:430px) {
 		html,body {
 			font-size: 23px;
 		}
-	}
+	} */
+	
 	/* iconfont */
 	@font-face {
 	  font-family: 'iconfont';

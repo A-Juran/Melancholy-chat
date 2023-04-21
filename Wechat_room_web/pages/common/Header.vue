@@ -7,7 +7,7 @@
 			<view class="text">
 				{{tabbarName}}
 			</view>
-			<view class="search">
+			<view class="search" v-show="Inputstatus">
 				<i class=""></i>
 				<input type="text" @focus="searchFocus(true)" @blur="searchFocus(false)" :class="searchClass"
 					placeholder="Search">
@@ -18,8 +18,17 @@
 
 <script>
 	export default {
-		props:['tabbarName'],
-		name:'Header',
+		props: {
+			tabbarName: {
+				type: String,
+			},
+			Inputstatus: {
+				default: true,
+				type: Boolean,
+				require: false
+			}
+		},
+		name: 'Header',
 		data() {
 			return {
 				search: '',

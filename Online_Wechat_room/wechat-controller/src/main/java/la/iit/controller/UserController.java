@@ -20,8 +20,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 import static la.iit.common.Constant.*;
@@ -38,11 +36,8 @@ import static la.iit.common.Constant.*;
 @ApiSupport(author = "21171326@qq.com")
 public class UserController {
     private UserService userService;
-
     private GlobalParamsUtils globalParamsUtils;
-
     private RedisUtils redisUtils;
-
 
     public UserController(UserService userService,
                           GlobalParamsUtils globalParamsUtils,
@@ -52,17 +47,17 @@ public class UserController {
         this.redisUtils = redisUtils;
 
     }
+
     @GetMapping("/captcha")
     @Operation(summary = "获取验证码")
     @SysLogin
     @VisitLimit(sec = 60, limit = 3)
-    public AjaxResult captcha(HttpServletRequest request,
-                              HttpServletResponse response) throws Exception {
-        HashMap<String,Object> captchaMap
+    public AjaxResult captcha() throws Exception {
+        HashMap<String, Object> captchaMap
                 = userService.captcha();
         // 将key和base64返回给前端
         return AjaxResult.success().put("key", captchaMap.get("key"))
-                .put("image",captchaMap.get("image"));
+                .put("image", captchaMap.get("image"));
     }
 
     @PostMapping("/login")
@@ -76,8 +71,8 @@ public class UserController {
                             String verifyCode) {
         // 获取redis中的验证码
         String redisCode = (String) redisUtils.get(verKey);
-        Assert.notNull(redisCode,"code is not null");
-        Assert.isTrue(redisCode.equals(verifyCode),"verify failed");
+        Assert.notNull(redisCode, "code is not null");
+        Assert.isTrue(redisCode.equals(verifyCode), "verify failed");
         String token = null;
         UserInfoVO userInfoVO =
                 UserInfoVO.builder();
