@@ -49,13 +49,17 @@
 				</view>
 			</view>
 		</view>
+		<!-- tabbar -->
+		<Tabbar :current="'0'"></Tabbar>  
 	</view>
 </template>
-<script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+<script>
 	import Header from '../common/Header.vue';
+	import Tabbar from '../common/tabbar.vue'
 	export default {
 		components: {
-			Header
+			Header,
+			Tabbar
 		},
 		data() {
 			return {
@@ -64,6 +68,11 @@
 		},
 		onLoad() {
 			console.log(this.$store.getters.GET_TOKEN);
+		},
+		onShow() {
+			uni.hideTabBar({
+				animation: false
+			})
 		},
 		methods: {
 			set_username() {
@@ -79,7 +88,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.chat-body {
 		width: 100%;
 		padding: 0px 0px 8px 0px;

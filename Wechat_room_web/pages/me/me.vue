@@ -1,46 +1,83 @@
 <template>
 	<view class="container">
-		
 		<view class="status_bar">
 			<!-- 这里是状态栏 -->
 		</view>
-		
-<!-- 		<view class="box-bg">
-			<uni-nav-bar height="50px" title="我" />
-		</view> -->
-		
-		<view class="user-background-wall">
-			<!-- 熊 -->
-			<view class="run-bear">
+		<!-- 头像展示 -->
+		<view class="user-info" :style="{'background-image':bk}">
+			<view class="user-avatar">
 			</view>
-			<!-- 介绍 -->
-			<text class="user-background-wall-desc">
-				"以前笑孔乙己，到头来成了孔乙己。"（{{userinfo.name}}）
-			</text>
+			<view class="user-basic-info">
+				<text class="user-name">Juran</text>
+				<text class="user-introduce">极霸矛，湘阿痕响啊。</text>
+			</view>
+			<!-- setting -->
+			<view class="setting">
+				<view class="event">
+					<view class="tips">
+						<i class="ri-folder-2-line"></i>
+						修改资料
+					</view>
+					<i class="next ri-arrow-drop-right-line"></i>
+				</view>
+				<view class="event">
+					<view class="tips">
+						<i class="ri-lock-password-line"></i>
+						修改密码
+					</view>
+					<i class="next ri-arrow-drop-right-line"></i>
+				</view>
+				<!-- 分割线 -->
+				<view class="split-line">
+					
+				</view>
+				<view class="event">
+					<view class="tips">
+						<i class="ri-question-line"></i>
+						使用帮助
+					</view>
+					<i class="next ri-arrow-drop-right-line"></i>
+				</view>
+				<view class="event">
+					<view class="tips">
+						<i class="ri-bookmark-2-line"></i>
+						法律条款
+					</view>
+					<i class="next ri-arrow-drop-right-line"></i>
+				</view>
+				<view class="split-line">
+					
+				</view>
+				<view class="event">
+					<view class="tips">
+						<i class="ri-chat-smile-3-line"></i>
+						意见反馈
+					</view>
+					<i class="next ri-arrow-drop-right-line"></i>
+				</view>
+			</view>
 		</view>
-		<!-- 用户头像 -->
-		<view class="current-user-info">
-			<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=21171326&spec=100" mode=""></image>
+		<!-- copyright -->
+		<view class="copyright">
+			<i class="ri-copyright-line"></i>
+			<text>Juran(QQ：21171326/12540701)</text>
 		</view>
-		<!-- 用户个人信息设置 -->
-		<view class="user-info-card">
-			<uni-section title="用户信息设置" type="line">
-				<uni-list>
-					<uni-list-item :show-extra-icon="true" showArrow :extra-icon="extraIcon" title="个人信息" />
-				</uni-list>
-			</uni-section>
-			<uni-card>
-				<text style="font-size: 1.2rem;">自然赋于人们的不调和还很多,人们自己萎缩堕落退步的也还很多,然而生命决不因此回头。</text>
-			</uni-card>
-
-		</view>
+		<!-- 自定义TabBar -->
+		<Tabbar :current="'3'"></Tabbar>
 	</view>
 </template>
 
 <script>
+	import Tabbar from '../common/tabbar.vue'
 	export default {
+		components: {
+			Tabbar
+		},
 		data() {
 			return {
+				bk: 'url("../../static/user-bk2.png")',
+				statusbarHeight: 0,
+				//yo
 				userinfo: {
 					name: 'JuRan'
 				},
@@ -51,6 +88,14 @@
 				}
 			}
 		},
+		onReady() {
+
+		},
+		onShow() {
+			uni.hideTabBar({
+				animation: false
+			})
+		},
 		methods: {
 
 		}
@@ -58,70 +103,92 @@
 </script>
 
 <style>
-	/* 背景图片 */
-	.user-background-wall {
+	/* copyright */
+	.copyright > i{
+		vertical-align: middle;
+	}
+	.copyright > text,.copyright > i{
+		color: #a6a6a6;
+	}
+	.copyright{
 		width: 100%;
-		height: 18rem;
-		background: url("@/static/user-info/user-background.png") no-repeat;
-		background-position: left bottom;
-		background-size: 100% auto;
-		background-color: #3b3d4b;
-		z-index: -999;
-		/*  */
-		position: relative;
-		overflow: hidden;
-		margin: 0 auto;
-	}
-
-	/* 背景熊 */
-	.user-background-wall .run-bear {
-		width: 200px;
-		height: 9rem;
 		position: absolute;
-		bottom: 0;
-		left: 30%;
-		transform: translateX(-50%);
-		background: url("@/static/user-info/xiong.png") no-repeat;
-		animation: run .6s steps(8) infinite;
-	}
-
-	.user-background-wall .user-background-wall-desc {
-		position: absolute;
-		top: 20%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		font-size:1rem;
-		color: #fff;
-		white-space: nowrap;
-	}
-
-	.current-user-info {
-		position: relative;
-		width: 100%;
+		bottom: 9.5rem;
 		text-align: center;
+		color: #fff;
 	}
-
-	.current-user-info>image {
-		position: absolute;
-		right: 20%;
-		top: -7rem;
+	/* userinfo setting */
+	.user-info .setting .split-line{
+		border-bottom: 1px solid rgb(237, 237, 237);
+	}
+	.user-info .setting .event > i{
+		font-size: 1.8rem;
+		color: rgb(201, 205, 216);
+	}
+	.user-info .setting .event .tips > i {
+		font-size: 1.8rem;
+		margin-right: .8rem;
+		vertical-align: middle;
+	}
+	.user-info .setting .event .tips{
+		height: 4.5rem;
+		line-height: 4.5rem;
+	}
+	.user-info .setting .event{
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		font-size: 1.3rem;
+		height: 4.5rem;
+		line-height: 4.5rem;
+	}
+	.user-info .setting{
+		width: 300px;
+		height: 500px;
+		background: #fff;
+		position:absolute;
+		top: 22rem;
+		right: 0;
+		border-radius: 2.6rem 1.2rem 0 3.2rem;
+		padding: 1rem 1.2rem 0 2rem;
+		box-sizing: border-box;
+	}
+	/* 个人信息 */
+	.user-info .user-basic-info .user-name{
+		font-size: 1.8rem;
+		font-weight: bold;
+	}
+	.user-info .user-basic-info .user-introduce{
+		font-size: 1.6rem;
+	}
+	.user-info .user-basic-info .user-name,.user-info .user-basic-info .user-introduce{
 		display: block;
-		width: 5.5rem;
-		height: 5.5rem;
-		border-radius: 50%;
-		margin: 0 auto;
-		margin-bottom: 5px;
+		color: #fff;
+	}
+	
+	.user-info .user-basic-info{
+		position: absolute;
+		left: 0;
+		top: 60%;
+		transform: translate(0,-50%);
+		padding-left: 1.2rem; 
+	}
+	.user-info .user-avatar {
+		width: 100%;
+		height: 100%;
+		background-image: linear-gradient(180deg,
+				rgba(255, 149, 28, 0) 80%,
+				rgba(246, 247, 247, 1));
+		z-index: 99;
 	}
 
-	.current-user-info > uni-card >text {
-		font-size: 1rem;
-	}
-
-	/* 设置熊跑动动画 */
-	@keyframes run {
-		0% {}
-		100% {
-			background-position: -1600px 0;
-		}
+	.user-info {
+		position: relative;
+		width: 100%;
+		height: 30rem;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		border: none;
 	}
 </style>

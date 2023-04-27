@@ -10,15 +10,19 @@
 		<view class="user-chat-gourp-notify">
 			<a href="javascript:;" @click="tabIndex($event,0)">
 				<i class="ri-user-2-fill"></i>
+				<text>Friend</text>
 			</a>
 			<a href="javascript:;" @click="tabIndex($event,1)">
 				<i class="ri-group-fill"></i>
+				<text>Group</text>
 			</a>
 			<a href="javascript:;" @click="tabIndex($event,2)">
 				<i class="ri-chat-smile-3-fill"></i>
+				<text>ChatRoom</text>
 			</a>
 			<a href="javascript:;" @click="tabIndex($event,3)">
 				<i class="ri-notification-fill"></i>
+				<text>Message</text>
 			</a>
 			<view class="tab" v-bind:style="{left:left+'px'}"></view>
 		</view>
@@ -26,6 +30,42 @@
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" :indicator-dots="swiper.indicatorDots" circular :current="swiper.current"
 				:disable-touch="swiper.touch">
+				<swiper-item>
+					<scroll-view scroll-y="true" class="scroll friend-scroll">
+						<!-- 好友信息展示页 -->
+						<view class="chat-list">
+							<!-- 我的聊天群列表 -->
+							<view class="chat-list-item" @click="toCommiuncation()" v-for="frined in list.friend"
+								:key="frined.id">
+								<!-- 群头像、基础信息 -->
+								<view class="chat-object-info">
+									<!-- 头像 -->
+									<image :src="frined.avatarUrl" mode="">
+									</image>
+									<!-- 基础信息 -->
+									<view class="chat-object-bease-info">
+										<p>{{frined.nickName}}</p>
+										<text>{{frined.sign}}</text>
+									</view>
+									<!-- 在线状态 -->
+									<view
+										:class="frined.onlineStatus ? friendObject.online_status : friendObject.online_status_off">
+									</view>
+								</view>
+								<!-- 聊天时间 -->
+								<view class="chat-info-time">
+									<!-- 2023-01-01 -->
+								</view>
+							</view>
+						</view>
+						<!-- 按字幕排序列表 -->
+						<ul class="select-category">
+							<li class="select-category-item" :id="item" :key="item" v-for="item in categoryList">
+								{{item.toUpperCase()}}
+							</li>
+						</ul>
+					</scroll-view>
+				</swiper-item>
 				<swiper-item>
 					<scroll-view scroll-y="true" class="scroll">
 						<!-- 好友信息展示页 -->
@@ -57,28 +97,86 @@
 					</scroll-view>
 				</swiper-item>
 				<swiper-item>
-					群组
+					<scroll-view scroll-y="true" class="scroll">
+						<!-- 好友信息展示页 -->
+						<view class="chat-list">
+							<!-- 我的聊天群列表 -->
+							<view class="chat-list-item" @click="toCommiuncation()" v-for="frined in list.friend"
+								:key="frined.id">
+								<!-- 群头像、基础信息 -->
+								<view class="chat-object-info">
+									<!-- 头像 -->
+									<image :src="frined.avatarUrl" mode="">
+									</image>
+									<!-- 基础信息 -->
+									<view class="chat-object-bease-info">
+										<p>{{frined.nickName}}</p>
+										<text>{{frined.sign}}</text>
+									</view>
+									<!-- 在线状态 -->
+									<view
+										:class="frined.onlineStatus ? friendObject.online_status : friendObject.online_status_off">
+									</view>
+								</view>
+								<!-- 聊天时间 -->
+								<view class="chat-info-time">
+									<!-- 2023-01-01 -->
+								</view>
+							</view>
+						</view>
+					</scroll-view>
 				</swiper-item>
 				<swiper-item>
-					聊天室
-				</swiper-item>
-				<swiper-item>
-					消息通知
+					<scroll-view scroll-y="true" class="scroll">
+						<!-- 好友信息展示页 -->
+						<view class="chat-list">
+							<!-- 我的聊天群列表 -->
+							<view class="chat-list-item" @click="toCommiuncation()" v-for="frined in list.friend"
+								:key="frined.id">
+								<!-- 群头像、基础信息 -->
+								<view class="chat-object-info">
+									<!-- 头像 -->
+									<image :src="frined.avatarUrl" mode="">
+									</image>
+									<!-- 基础信息 -->
+									<view class="chat-object-bease-info">
+										<p>{{frined.nickName}}</p>
+										<text>{{frined.sign}}</text>
+									</view>
+									<!-- 在线状态 -->
+									<view
+										:class="frined.onlineStatus ? friendObject.online_status : friendObject.online_status_off">
+									</view>
+								</view>
+								<!-- 聊天时间 -->
+								<view class="chat-info-time">
+									<!-- 2023-01-01 -->
+								</view>
+							</view>
+						</view>
+					</scroll-view>
 				</swiper-item>
 			</swiper>
 		</view>
-
+		<!-- 自定义TabBar -->
+		<Tabbar :current="'1'"></Tabbar>
 	</view>
 </template>
 
 <script>
-	import Header from '../common/Header.vue';
+	import Header from '../common/Header.vue'
+	import Tabbar from '../common/tabbar.vue'
 	export default {
 		components: {
-			Header
+			Header,
+			Tabbar
 		},
 		data() {
 			return {
+				categoryList: [
+					'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+					'u', 'v', 'w', 'x', 'y', 'z', '#'
+				],
 				list: {
 					friend: [{
 							id: 21171326,
@@ -169,6 +267,11 @@
 				]
 			}
 		},
+		onShow() {
+			uni.hideTabBar({
+				animation: false
+			})
+		},
 		onReady() {
 			//初始化tab切换tabindex的位置。
 			const query = uni.createSelectorQuery().in(this);
@@ -235,6 +338,21 @@
 </script>
 
 <style>
+	.friend-scroll .select-category .select-category-item {
+		list-style-type: none;
+		color: #ccc;
+	}
+
+	.friend-scroll .select-category {
+		position: absolute;
+		right: .8rem;
+		top: 1.2rem;
+	}
+
+	.friend-scroll {
+		position: relative;
+	}
+
 	/* 未进行计算的用户信息滑动内容 */
 	.swiper {
 		height: calc(100vh - 150px);
@@ -258,6 +376,11 @@
 	}
 
 	/* user-chat-gourp-notify */
+	.user-chat-gourp-notify>a>text {
+		display: block;
+		font-size: 1rem;
+	}
+
 	.user-chat-gourp-notify>a>i {
 		font-size: 2.0rem;
 	}
@@ -266,7 +389,7 @@
 		display: inline-block;
 		width: 5rem;
 		height: 5rem;
-		line-height: 5rem;
+		/* line-height: 5rem; */
 		text-align: center;
 		color: #000;
 		/* background-color: #eee; */
