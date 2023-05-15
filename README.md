@@ -20,4 +20,4 @@
 ## 基础页面截图
 
 
-![](C:\Users\Juran\Desktop\melancholy-chat.png)
+![]([C:\Users\Juran\Desktop\melancholy-chat.png](https://github.com/A-Juran/Wechat_room/blob/main/assets/melancholy-chat.png))
