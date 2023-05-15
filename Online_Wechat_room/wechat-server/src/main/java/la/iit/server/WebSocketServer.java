@@ -26,7 +26,7 @@ public class WebSocketServer {
     //记录当前连接数量，设置为线程安全。
     private static int onlineClientCount = 0;
 
-    // concurrentHashMap包是线程安全的set，用来存放每个客户端对应的webSocket对象。
+    //concurrentHashMap包是线程安全的set，用来存放每个客户端对应的webSocket对象。
     private static ConcurrentHashMap<String, WebSocketServer> webSocketServerConcurrentHashMap = new ConcurrentHashMap<>();
 
     //与每个客户端连接的会话，通过它来给客户端发送数据。

@@ -6,11 +6,12 @@
 		</view>
 		<!-- login|register -->
 		<view class="login-action">
-			<button type="default" @click="regLoginModel()">注册</button>
-			<button type="default" @click="tz()">登录</button>
+			<button type="default" @click="regLoginModel(1)">注册</button>
+			<button type="default" @click="regLoginModel(2)">登录</button>
 		</view>
 		<!-- login-model -->
 		<view :class="loginClassName">
+			<!-- model-switch -->
 			<view class="login-box" v-if="isLoginBox">
 				<view class="login-reg-switch">
 					<text :class="tableLoginClass" @click="switchTab(1)">登录</text>
@@ -29,11 +30,11 @@
 					<i class="ri-code-s-slash-line input-code-icon"></i>
 					<input type="text" :adjust-position="false" v-model="form.verifycode" placeholder="verifycode">
 					<view class="code-img">
-						<img :src="Captcha" alt="" >
+						<img :src="Captcha" alt="">
 					</view>
 				</view>
 				<view class="input-item">
-					<button @click="login()">登录</button>
+					<button @click="tz()">登录</button>
 				</view>
 				<view class="input-item forget-tips">
 					<a href="javascript:;">忘记密码?</a>
@@ -69,8 +70,7 @@
 				</view> -->
 				<view class="input-item">
 					<i class="ri-key-2-line input-code-icon"></i>
-					<input type="password" v-model="form.password" :adjust-position="false"
-						placeholder="password">
+					<input type="password" v-model="form.password" :adjust-position="false" placeholder="password">
 				</view>
 				<!-- <view class="input-item input-code">
 					<i class="ri-code-s-slash-line input-code-icon"></i>
@@ -97,6 +97,8 @@
 					</a>
 				</view> -->
 			</view>
+			<!-- close button -->
+			<i class="ri-close-line clos-button" @click="loginModelOut()"></i>
 		</view>
 	</view>
 </template>
@@ -119,8 +121,8 @@
 				},
 				//页面属性
 				isLoginBox: true,
-				loginRegModel: false,
-				loginClassName: 'login-model-init',
+				loginRegModel: true,
+				loginClassName: 'login-model login-model-init-position',
 				Captcha: "",
 				//登录样式
 				tableLoginClass: "switch-login switch-login-active",
@@ -130,12 +132,19 @@
 		},
 		onLoad() {},
 		methods: {
-			tz(){
+			loginModelOut() {
+				//点击后为注册框注册animation
+				this.loginClassName = '';
+				this.loginClassName = "login-model login-model-out";
+				this.loginRegModel = false;
+			},
+			tz() {
 				uni.switchTab({
-					url:"/pages/index/index"
+					url: "/pages/index/index"
 				})
 			},
 			switchTab(index) {
+				// console.log(index);
 				//判断是否为注册或者登录页面显示
 				this.isLoginBox = index == 2 ? false : true;
 				//选中设给谁设定样式
@@ -151,12 +160,12 @@
 			register() {
 				api.register({
 					data: {
-						'nickName':this.form.nickName,
-						'username':this.form.username,
-						'password':this.form.password,
+						'nickName': this.form.nickName,
+						'username': this.form.username,
+						'password': this.form.password,
 					}
 				}).then(res => {
-					console.log(res);
+					// 弹出提示框
 					uni.showToast({
 						title: res.msg,
 						duration: 1000
@@ -171,9 +180,16 @@
 						title: res.msg,
 						duration: 1000
 					})
-					uni.switchTab({
-						url: '/pages/index/index'
-					})
+					//如果登录成功存储用户信息并直接进行页面跳转。
+					if (res.code === 200) {
+						this.$store.commit('SET_TOKEN', res.token);
+						this.$store.commit('SET_CURRENT_USER', res.currentUser);
+						uni.switchTab({
+							url: "/pages/index/index"
+						})
+						//加载信息列表|好友列表|群组列表|聊天室列表|通知信息列表
+						
+					}
 				})
 			},
 			getRemoteCaptcha() {
@@ -186,15 +202,19 @@
 						this.Captcha = res.image;
 						//保存Key
 						this.form.key = res.key;
-					}).catch(err=>{
+					}).catch(err => {
 						console.log(err);
 					});
 			},
-			regLoginModel() {
+			regLoginModel(index) {
 				//点击后为注册框注册animation
-				this.loginRegModel = true;
 				this.loginClassName = '';
-				this.loginClassName = "login-model";
+				this.loginClassName = "login-model login-model-in";
+				if (index === 1) {
+					this.switchTab(2);
+					return;
+				}
+				this.switchTab(1);
 			}
 		}
 	}
@@ -233,6 +253,10 @@
 		display: flex;
 		justify-content: space-around;
 		margin-top: 7.2rem;
+	}
+
+	.login-model {
+		position: relative;
 	}
 
 	.input-code .code-img.get-code>a {
@@ -405,12 +429,6 @@
 		text-decoration: none;
 	}
 
-	.login-container .login-model-init {
-		width: 100%;
-		position: fixed;
-		display: none;
-	}
-
 	.login-container .login-model {
 		width: 100%;
 		height: 45rem;
@@ -418,9 +436,29 @@
 		bottom: 0rem;
 		background-color: #f0fbf8;
 		border-radius: 3rem 3rem 0 0;
-		animation: loginModel-in 0.6s;
 		padding: 2rem 1.2rem 4rem 1.2rem;
 		box-sizing: border-box;
+	}
+
+	.login-model.login-model-init-position {
+		bottom: -45rem;
+	}
+
+	.login-model .login-model-in {
+		bottom: 0rem;
+		animation: loginModel-in 0.6s;
+	}
+
+	.login-container .login-model-out {
+		bottom: -45rem;
+		animation: loginModel-out 0.6s ease-out;
+	}
+
+	.login-model .clos-button {
+		font-size: 1.8rem;
+		position: absolute;
+		right: 1.5rem;
+		top: 2.5rem;
 	}
 
 	/* 定义动画 */

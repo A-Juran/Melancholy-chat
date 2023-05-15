@@ -9,7 +9,7 @@
 				<view class="chat-object-info">
 					<image src="http://q2.qlogo.cn/headimg_dl?dst_uin=21171326&spec=100" mode=""></image>
 					<view class="chat-object-bease-info">
-						<p>Mr.Fan</p>
+						<p>Ms.Fan</p>
 						<text>So</text>
 					</view>
 				</view>
