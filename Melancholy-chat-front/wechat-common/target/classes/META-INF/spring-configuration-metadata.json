@@ -1,0 +1,24 @@
+{
+  "groups": [
+    {
+      "name": "wx",
+      "type": "la.iit.config.WxAppIdConfig",
+      "sourceType": "la.iit.config.WxAppIdConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "wx.appid",
+      "type": "java.lang.String",
+      "description": "小程序Id",
+      "sourceType": "la.iit.config.WxAppIdConfig"
+    },
+    {
+      "name": "wx.secret",
+      "type": "java.lang.String",
+      "description": "小程序密钥",
+      "sourceType": "la.iit.config.WxAppIdConfig"
+    }
+  ],
+  "hints": []
+}
