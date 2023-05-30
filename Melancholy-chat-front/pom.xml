@@ -16,7 +16,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Melancholy-chat-front</name>
     <description>Melancholy-chat-front</description>
-
     <!--父项目中的子项目-->
     <modules>
         <module>wechat-entity</module>

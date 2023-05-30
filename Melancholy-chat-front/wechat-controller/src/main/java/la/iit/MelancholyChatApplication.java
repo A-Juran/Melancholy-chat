@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan(basePackages = "la.iit.mapper")
-public class OnlineWechatRoomApplication {
+public class MelancholyChatApplication {
     public static void main(String[] args) {
-        SpringApplication.run(OnlineWechatRoomApplication.class, args);
+        SpringApplication.run(MelancholyChatApplication.class, args);
     }
 
 }
