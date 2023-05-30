@@ -35,7 +35,7 @@ const request = (config) => {
 				uni.hideLoading();
 				//成功或存储token
 				if (res.data.token) {
-					uni.setStorageSync(res.data.token);
+					uni.setStorageSync("token",res.data.token);
 				}
 				resolve(res.data);
 			},

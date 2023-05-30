@@ -1,6 +1,5 @@
 package la.iit.controller;
 
-
 import cn.hutool.core.lang.Assert;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.v3.oas.annotations.Operation;
@@ -64,15 +63,13 @@ public class UserController {
     @Operation(summary = "用户登录")
     @SysLogin
     @VisitLimit(sec = 60, limit = 3)
-    public AjaxResult login(@RequestBody @Validated(UserDTO
-            .UserLogin.class)
-                            UserDTO userDTO,
-                            String verKey,
-                            String verifyCode) {
+    public AjaxResult login(@RequestBody @Validated(UserDTO.UserLogin.class)
+                            UserDTO userDTO) {
         // 获取redis中的验证码
-        String redisCode = (String) redisUtils.get(verKey);
+        String redisCode = (String) redisUtils.get(userDTO.getVerKey());
         Assert.notNull(redisCode, "code is not null");
-        Assert.isTrue(redisCode.equals(verifyCode), "verify failed");
+        log.info("redisCode:{}",redisCode);
+        Assert.isTrue(redisCode.equalsIgnoreCase(userDTO.getVerifyCode()), "verify failed");
         String token = null;
         UserInfoVO userInfoVO =
                 UserInfoVO.builder();

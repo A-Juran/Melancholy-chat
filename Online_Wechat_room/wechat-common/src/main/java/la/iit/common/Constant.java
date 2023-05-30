@@ -5,6 +5,8 @@ package la.iit.common;
  * @date 2/12/2023
  */
 public enum Constant {
+    AUTHENTICATION_FAIL("认证失败"),
+    UN_AUTHENTICATION("没有进行授权"),
     LOG_RECORD_FAIL("日志记录失败"),
     LOG_RECORD_SUCCESS("日志记录失败"),
     REQUEST_EXCEPTION("日志记录失败"),

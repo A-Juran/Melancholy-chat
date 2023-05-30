@@ -58,7 +58,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, OwUser>
                 .eq(OwUser::getPassword, MD5.create().digestHex(password));
         OwUser currentUser = getOne(login);
         Assert.notNull(currentUser, LOGIN_FAILED.value());
-        if (!currentUser.isActive()){
+        if (!currentUser.isActive()) {
             throw new UserAccountDisabledException();
         }
         //redis中存储当前登录用户数据

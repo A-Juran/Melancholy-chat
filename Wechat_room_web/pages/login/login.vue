@@ -28,13 +28,13 @@
 				</view>
 				<view class="input-item input-code">
 					<i class="ri-code-s-slash-line input-code-icon"></i>
-					<input type="text" :adjust-position="false" v-model="form.verifycode" placeholder="verifycode">
+					<input type="text" :adjust-position="false" v-model="form.verifyCode" placeholder="verifycode">
 					<view class="code-img">
 						<img :src="Captcha" alt="">
 					</view>
 				</view>
 				<view class="input-item">
-					<button @click="tz()">登录</button>
+					<button @click="login()">登录</button>
 				</view>
 				<view class="input-item forget-tips">
 					<a href="javascript:;">忘记密码?</a>
@@ -116,8 +116,8 @@
 					password: '',
 					resPassword: '',
 					email: '',
-					verifycode: '',
-					key: ''
+					verifyCode: '',
+					verKey: ''
 				},
 				//页面属性
 				isLoginBox: true,
@@ -130,7 +130,19 @@
 				tableRegClass: "switch-reg",
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			let currentUser = this.$store.getters.getCurrentUser;
+			console.log(currentUser);
+			let token = this.$store.getters.GET_TOKEN;
+			if(currentUser != null && 
+			currentUser != undefined &&　currentUser != '' &&
+			token != null && 
+			token != undefined &&　token != ''){
+				uni.switchTab({
+					url: "/pages/index/index"
+				})
+			}
+		},
 		methods: {
 			loginModelOut() {
 				//点击后为注册框注册animation
@@ -176,6 +188,7 @@
 				api.userLogin({
 					data: this.form
 				}).then(res => {
+					console.log(res);
 					uni.showToast({
 						title: res.msg,
 						duration: 1000
@@ -188,12 +201,10 @@
 							url: "/pages/index/index"
 						})
 						//加载信息列表|好友列表|群组列表|聊天室列表|通知信息列表
-						
 					}
 				})
 			},
 			getRemoteCaptcha() {
-				console.log("发送请求");
 				//获取验证码
 				api.getCaptcha({})
 					.then(res => {
@@ -201,7 +212,7 @@
 						//设置图片
 						this.Captcha = res.image;
 						//保存Key
-						this.form.key = res.key;
+						this.form.verKey = res.key;
 					}).catch(err => {
 						console.log(err);
 					});

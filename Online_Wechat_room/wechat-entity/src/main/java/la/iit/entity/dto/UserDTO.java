@@ -56,6 +56,14 @@ public class UserDTO {
     @NotNull(message = "性别不能为空", groups = {UserInfoUpdate.class})
     private OwUser.Gender sex;
 
+    @Size(min = 6)
+    @NotNull(message = "验证Key不能为空", groups = {UserLogin.class})
+    private String verKey;
+
+    @Size(min = 5)
+    @NotNull(message = "验证码不能为空", groups = {UserLogin.class})
+    private String verifyCode;
+
 
     /**
      * 登录

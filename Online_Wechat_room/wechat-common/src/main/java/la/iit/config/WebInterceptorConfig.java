@@ -19,7 +19,10 @@ public class WebInterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(visitLimitInterceptor);
+        registry.addInterceptor(visitLimitInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/user/**")
+                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**","/v3/**", "/doc.html/**","/favicon.ico");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }
